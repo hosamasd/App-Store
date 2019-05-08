@@ -10,6 +10,16 @@ import UIKit
 
 class SearchCell: UICollectionViewCell {
     
+    var apps:Result? {
+        didSet{
+            guard let app = apps else { return  }
+        self.appNameLabel.text = app.trackName
+            self.appCategLabel.text = app.primaryGenreName
+            
+            self.appSizeLabel.text = "Rating: \(app.averageUserRating ?? 0)"
+        }
+    }
+    
     let appImage:UIImageView = {
         let im = UIImageView()
         im.layer.cornerRadius = 12
@@ -59,7 +69,7 @@ class SearchCell: UICollectionViewCell {
     override init(frame: CGRect) {
         super.init(frame: frame)
         
-        backgroundColor = .yellow
+       
       setupViews()
     }
     
