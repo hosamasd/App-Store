@@ -1,5 +1,5 @@
 //
-//  AppListHorizentalVC.swift
+//  AppHeaderHorizentalVC.swift
 //  App Store
 //
 //  Created by hosam on 5/8/19.
@@ -8,11 +8,9 @@
 
 import UIKit
 
-class AppListHorizentalVC: BaseListController  {
+class AppHeaderHorizentalVC: BaseListController {
     
-    fileprivate let cellId = "cellId"
-    let topBottomPadding:CGFloat = 12
-    let linrSpacing:CGFloat = 10
+     fileprivate let cellId = "cellId"
     
     override func viewDidLoad() {
         super.viewDidLoad()
@@ -21,32 +19,25 @@ class AppListHorizentalVC: BaseListController  {
     }
     
     override func collectionView(_ collectionView: UICollectionView, numberOfItemsInSection section: Int) -> Int {
-        return 10
+        return 3
     }
     
     override func collectionView(_ collectionView: UICollectionView, cellForItemAt indexPath: IndexPath) -> UICollectionViewCell {
-        let cell = collectionView.dequeueReusableCell(withReuseIdentifier: cellId, for: indexPath) as! AppRowCell
+        let cell = collectionView.dequeueReusableCell(withReuseIdentifier: cellId, for: indexPath) as! AppHeaderHorizentalCell
         
-       return cell
+        return cell
     }
     
     func collectionView(_ collectionView: UICollectionView, layout collectionViewLayout: UICollectionViewLayout, sizeForItemAt indexPath: IndexPath) -> CGSize {
-        let width = view.frame.width - 48
-        let height = (view.frame.height - 2 * topBottomPadding - 2 * linrSpacing) / 3 // 3 for 3 item 20 for valueof minimumLineSpacingForSectionAt
-        
-        return .init(width: width, height: height )
+        return CGSize(width: view.frame.width - 48, height: view.frame.height)
     }
     
     func collectionView(_ collectionView: UICollectionView, layout collectionViewLayout: UICollectionViewLayout, insetForSectionAt section: Int) -> UIEdgeInsets {
-        return UIEdgeInsets(top: topBottomPadding, left: 16, bottom: topBottomPadding ,right: 16)
-    }
-    
-    func collectionView(_ collectionView: UICollectionView, layout collectionViewLayout: UICollectionViewLayout, minimumLineSpacingForSectionAt section: Int) -> CGFloat {
-        return linrSpacing
+        return .init(top: 0, left: 16, bottom: 0, right: 0)
     }
     
     fileprivate func setupCollectionView() {
-        
+        collectionView.backgroundColor = .yellow
         if  let layout = collectionViewLayout as? UICollectionViewFlowLayout{
             layout.scrollDirection = .horizontal
         }
@@ -54,7 +45,6 @@ class AppListHorizentalVC: BaseListController  {
         
         collectionView.backgroundColor = .white
         
-        collectionView.register(AppRowCell.self, forCellWithReuseIdentifier: cellId)
+        collectionView.register(AppHeaderHorizentalCell.self, forCellWithReuseIdentifier: cellId)
     }
-    
 }

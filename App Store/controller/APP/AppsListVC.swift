@@ -8,10 +8,10 @@
 
 import UIKit
 
-class AppsListVC: BaseListController, UICollectionViewDelegateFlowLayout {
+class AppsListVC: BaseListController {
     
     fileprivate let cellId = "cellId"
-    
+     fileprivate let headerId = "headerId"
     
     
     override func viewDidLoad() {
@@ -30,6 +30,16 @@ class AppsListVC: BaseListController, UICollectionViewDelegateFlowLayout {
         return cell
     }
     
+    override func collectionView(_ collectionView: UICollectionView, viewForSupplementaryElementOfKind kind: String, at indexPath: IndexPath) -> UICollectionReusableView {
+        let header = collectionView.dequeueReusableSupplementaryView(ofKind: kind, withReuseIdentifier: headerId, for: indexPath) as! AppHeaderCell
+        
+        return header
+    }
+    
+    func collectionView(_ collectionView: UICollectionView, layout collectionViewLayout: UICollectionViewLayout, referenceSizeForHeaderInSection section: Int) -> CGSize {
+        return CGSize(width: view.frame.width, height: 300)
+    }
+    
     func collectionView(_ collectionView: UICollectionView, layout collectionViewLayout: UICollectionViewLayout, sizeForItemAt indexPath: IndexPath) -> CGSize {
         return .init(width: view.frame.width, height: 300)
     }
@@ -38,6 +48,7 @@ class AppsListVC: BaseListController, UICollectionViewDelegateFlowLayout {
     fileprivate func setupCollectionView() {
         collectionView.backgroundColor = .white
         collectionView.register(AppGroupCell.self, forCellWithReuseIdentifier: cellId)
+        collectionView.register(AppHeaderCell.self, forSupplementaryViewOfKind: UICollectionView.elementKindSectionHeader, withReuseIdentifier: headerId)
     }
     
 }

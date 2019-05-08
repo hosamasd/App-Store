@@ -8,7 +8,7 @@
 
 import UIKit
 
-class AppSearchVC: BaseListController, UICollectionViewDelegateFlowLayout {
+class AppSearchVC: BaseListController {
     
     let defaultTextLable:UILabel = {
        let la = UILabel()
