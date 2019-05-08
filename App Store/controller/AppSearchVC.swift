@@ -35,27 +35,9 @@ class AppSearchVC: BaseListController {
 //        fetchAppsFromItubes()
     }
     
-    func fetchAppsFromItubes()  {
-        Services.shared.fetchApps(searchText: "instagram") { (res, err) in
-            if err != nil {
-                print("error to fetch apps ",err?.localizedDescription)
-                return
-            }
-            
-            self.appResultsArray = res
-            DispatchQueue.main.async {
-                self.collectionView.reloadData()
-            }
-        }
-    }
     
-    func setupSearchController()  {
-        definesPresentationContext = true
-        navigationItem.searchController = searchController
-        navigationItem.hidesSearchBarWhenScrolling = false
-        searchController.dimsBackgroundDuringPresentation = false
-        searchController.searchBar.delegate = self
-    }
+    
+     //MARK: -UICollectionView methods
     
     override func collectionView(_ collectionView: UICollectionView, numberOfItemsInSection section: Int) -> Int {
         defaultTextLable.isHidden = appResultsArray.count != 0
@@ -82,7 +64,27 @@ class AppSearchVC: BaseListController {
         collectionView.register(SearchCell.self, forCellWithReuseIdentifier: cellId)
     }
     
+ fileprivate   func fetchAppsFromItubes()  {
+        Services.shared.fetchApps(searchText: "instagram") { (res, err) in
+            if err != nil {
+                print("error to fetch apps ",err?.localizedDescription)
+                return
+            }
+            
+            self.appResultsArray = res
+            DispatchQueue.main.async {
+                self.collectionView.reloadData()
+            }
+        }
+    }
     
+  fileprivate  func setupSearchController()  {
+        definesPresentationContext = true
+        navigationItem.searchController = searchController
+        navigationItem.hidesSearchBarWhenScrolling = false
+        searchController.dimsBackgroundDuringPresentation = false
+        searchController.searchBar.delegate = self
+    }
     
 }
 
@@ -106,7 +108,5 @@ extension AppSearchVC :UISearchBarDelegate {
                 }
             }
         })
-        
-    }
-    
+   }
 }

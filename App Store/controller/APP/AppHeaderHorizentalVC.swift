@@ -11,6 +11,7 @@ import UIKit
 class AppHeaderHorizentalVC: BaseListController {
     
      fileprivate let cellId = "cellId"
+    var socialAppArray = [SocialAModel]()
     
     override func viewDidLoad() {
         super.viewDidLoad()
@@ -18,13 +19,17 @@ class AppHeaderHorizentalVC: BaseListController {
         setupCollectionView()
     }
     
+     //MARK: -UICollectionView methods
+    
     override func collectionView(_ collectionView: UICollectionView, numberOfItemsInSection section: Int) -> Int {
-        return 3
+        return socialAppArray.count
     }
     
     override func collectionView(_ collectionView: UICollectionView, cellForItemAt indexPath: IndexPath) -> UICollectionViewCell {
         let cell = collectionView.dequeueReusableCell(withReuseIdentifier: cellId, for: indexPath) as! AppHeaderHorizentalCell
+        let social = socialAppArray[indexPath.item]
         
+        cell.socials = social
         return cell
     }
     

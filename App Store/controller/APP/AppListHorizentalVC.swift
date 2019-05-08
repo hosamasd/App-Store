@@ -11,6 +11,8 @@ import UIKit
 class AppListHorizentalVC: BaseListController  {
     
     fileprivate let cellId = "cellId"
+    var appGroups:AppGroupModel? 
+    
     let topBottomPadding:CGFloat = 12
     let linrSpacing:CGFloat = 10
     
@@ -20,13 +22,17 @@ class AppListHorizentalVC: BaseListController  {
         setupCollectionView()
     }
     
+    //MARK: -UICollectionView methods
+    
     override func collectionView(_ collectionView: UICollectionView, numberOfItemsInSection section: Int) -> Int {
-        return 10
+        return appGroups?.feed.results.count ?? 0
     }
     
     override func collectionView(_ collectionView: UICollectionView, cellForItemAt indexPath: IndexPath) -> UICollectionViewCell {
         let cell = collectionView.dequeueReusableCell(withReuseIdentifier: cellId, for: indexPath) as! AppRowCell
+        let appFeed = appGroups?.feed.results[indexPath.item]
         
+        cell.appFeeds = appFeed
        return cell
     }
     
@@ -45,15 +51,13 @@ class AppListHorizentalVC: BaseListController  {
         return linrSpacing
     }
     
+    //MARK: -user methods
+    
     fileprivate func setupCollectionView() {
-        
+        collectionView.backgroundColor = .white
         if  let layout = collectionViewLayout as? UICollectionViewFlowLayout{
             layout.scrollDirection = .horizontal
         }
-        
-        
-        collectionView.backgroundColor = .white
-        
         collectionView.register(AppRowCell.self, forCellWithReuseIdentifier: cellId)
     }
     

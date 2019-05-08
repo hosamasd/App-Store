@@ -7,8 +7,19 @@
 //
 
 import UIKit
-
+import SDWebImage
 class AppHeaderHorizentalCell: BaseCell {
+    
+    var socials:SocialAModel? {
+        didSet{
+            guard let so = socials else { return  }
+            self.companyLabel.text = so.name
+            self.titleLabel.text = so.tagline
+            
+            guard let url = URL(string: so.imageUrl) else { return  }
+            self.appBigImage.sd_setImage(with: url)
+        }
+    }
     
     let appBigImage:UIImageView = {
         let im = UIImageView(cornerRdius: 8)
@@ -27,6 +38,7 @@ class AppHeaderHorizentalCell: BaseCell {
         la.numberOfLines = 2
         return la
     }()
+    
     override func setupViews() {
         backgroundColor = .white
         

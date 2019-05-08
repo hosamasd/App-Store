@@ -7,8 +7,21 @@
 //
 
 import UIKit
+import SDWebImage
 
 class AppRowCell: BaseCell {
+    
+    var appFeeds:FeedResult? {
+        didSet{
+            guard let app = appFeeds else { return }
+            
+            guard  let url = URL(string: app.artworkUrl100) else {return}
+            
+            self.appImage.sd_setImage(with: url)
+            self.appNameLabel.text = app.name
+            self.appCompanyLabel.text = app.artistName
+        }
+    }
     
     let appImage:UIImageView = {
         let im = UIImageView(cornerRdius: 12)
