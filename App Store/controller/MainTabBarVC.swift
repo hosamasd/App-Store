@@ -25,15 +25,16 @@ class MainTabBarVC: UITabBarController {
         
         let today = templateNavControllerVC(title: "Today", selectedImage: #imageLiteral(resourceName: "today_icon"), rootViewController: UIViewController())
         let search = templateNavControllerVC(title: "Search", selectedImage: #imageLiteral(resourceName: "search"), rootViewController: AppSearchVC() )
-        let apps = templateNavControllerVC(title: "Apps", selectedImage: #imageLiteral(resourceName: "apps"), rootViewController: UIViewController())
+        let apps = templateNavControllerVC(title: "Apps", selectedImage: #imageLiteral(resourceName: "apps"), rootViewController: AppsListVC())
         
         
         tabBar.tintColor = .black
         
         viewControllers = [
+             apps,
             search,
             today,
-            apps
+           
            ]
         
         guard let items = tabBar.items else { return }

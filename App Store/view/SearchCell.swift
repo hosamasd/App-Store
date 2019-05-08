@@ -8,7 +8,7 @@
 
 import UIKit
 import SDWebImage
-class SearchCell: UICollectionViewCell {
+class SearchCell: BaseCell {
     
     var apps:Result? {
         didSet{
@@ -72,28 +72,11 @@ class SearchCell: UICollectionViewCell {
     lazy var appScreenShot2Image = createScreenSots()
     lazy var appScreenShot3Image = createScreenSots()
     
-    override init(frame: CGRect) {
-        super.init(frame: frame)
-        
-       
-      setupViews()
-    }
+   
+   
+   
     
-    func createScreenSots() -> UIImageView {
-        let im = UIImageView()
-       im.backgroundColor = .blue
-        im.layer.cornerRadius = 8
-        im.clipsToBounds = true
-        im.layer.borderWidth = 0.5
-        im.contentMode = .scaleAspectFill
-        im.layer.borderColor = UIColor(white: 0.5, alpha: 0.5).cgColor
-        return im
-    }
-    required init?(coder aDecoder: NSCoder) {
-        fatalError("init(coder:) has not been implemented")
-    }
-    
-    func setupViews()  {
+    override func setupViews()  {
         
         let stacksLabel = getStacks(views: appNameLabel,appCategLabel,ratingsLabel, axis: .vertical, space: 0)
         let infoAppStack = getStacks(views: appImage,stacksLabel,getButton, axis: .horizontal, space: 12)
@@ -108,6 +91,17 @@ class SearchCell: UICollectionViewCell {
         
         mainStacks.fillSuperview(padding: .init(top: 16, left: 16, bottom: 16, right: 16))
         
+    }
+    
+    func createScreenSots() -> UIImageView {
+        let im = UIImageView()
+        im.backgroundColor = .blue
+        im.layer.cornerRadius = 8
+        im.clipsToBounds = true
+        im.layer.borderWidth = 0.5
+        im.contentMode = .scaleAspectFill
+        im.layer.borderColor = UIColor(white: 0.5, alpha: 0.5).cgColor
+        return im
     }
     
     @objc func handleGet(){

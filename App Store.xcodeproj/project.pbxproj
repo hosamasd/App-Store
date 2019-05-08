@@ -19,6 +19,12 @@
 		4E98039D2282B6F4002DFF90 /* SearchCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4E98039C2282B6F4002DFF90 /* SearchCell.swift */; };
 		4E9803A02282B7CE002DFF90 /* UIView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4E98039F2282B7CE002DFF90 /* UIView.swift */; };
 		4E9803A22282B852002DFF90 /* ExtensionUivew.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4E9803A12282B852002DFF90 /* ExtensionUivew.swift */; };
+		4ECAF7B12282E79A0035E3FC /* BaseListController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4ECAF7B02282E79A0035E3FC /* BaseListController.swift */; };
+		4ECAF7B32282E7D80035E3FC /* AppsListVC.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4ECAF7B22282E7D80035E3FC /* AppsListVC.swift */; };
+		4ECAF7B62282E8290035E3FC /* AppGroupCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4ECAF7B52282E8290035E3FC /* AppGroupCell.swift */; };
+		4ECAF7B82282E8C10035E3FC /* BaseCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4ECAF7B72282E8C10035E3FC /* BaseCell.swift */; };
+		4ECAF7BD2282EC8B0035E3FC /* AppListHorizentalVC.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4ECAF7BC2282EC8B0035E3FC /* AppListHorizentalVC.swift */; };
+		4ECAF7BF2282F1800035E3FC /* AppRowCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4ECAF7BE2282F1800035E3FC /* AppRowCell.swift */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXFileReference section */
@@ -37,6 +43,12 @@
 		4E98039C2282B6F4002DFF90 /* SearchCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SearchCell.swift; sourceTree = "<group>"; };
 		4E98039F2282B7CE002DFF90 /* UIView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = UIView.swift; sourceTree = "<group>"; };
 		4E9803A12282B852002DFF90 /* ExtensionUivew.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = ExtensionUivew.swift; sourceTree = "<group>"; };
+		4ECAF7B02282E79A0035E3FC /* BaseListController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = BaseListController.swift; sourceTree = "<group>"; };
+		4ECAF7B22282E7D80035E3FC /* AppsListVC.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AppsListVC.swift; sourceTree = "<group>"; };
+		4ECAF7B52282E8290035E3FC /* AppGroupCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AppGroupCell.swift; sourceTree = "<group>"; };
+		4ECAF7B72282E8C10035E3FC /* BaseCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = BaseCell.swift; sourceTree = "<group>"; };
+		4ECAF7BC2282EC8B0035E3FC /* AppListHorizentalVC.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AppListHorizentalVC.swift; sourceTree = "<group>"; };
+		4ECAF7BE2282F1800035E3FC /* AppRowCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AppRowCell.swift; sourceTree = "<group>"; };
 		F07A2AD4AC696EB1B347AB60 /* Pods_App_Store.framework */ = {isa = PBXFileReference; explicitFileType = wrapper.framework; includeInIndex = 0; path = Pods_App_Store.framework; sourceTree = BUILT_PRODUCTS_DIR; };
 /* End PBXFileReference section */
 
@@ -107,7 +119,9 @@
 		4E9803952282B074002DFF90 /* controller */ = {
 			isa = PBXGroup;
 			children = (
+				4ECAF7B02282E79A0035E3FC /* BaseListController.swift */,
 				4E9803982282B127002DFF90 /* MainTabBarVC.swift */,
+				4ECAF7B92282EA3E0035E3FC /* APP */,
 				4E98039A2282B50C002DFF90 /* AppSearchVC.swift */,
 			);
 			path = controller;
@@ -124,6 +138,8 @@
 		4E9803972282B096002DFF90 /* view */ = {
 			isa = PBXGroup;
 			children = (
+				4ECAF7B72282E8C10035E3FC /* BaseCell.swift */,
+				4ECAF7B42282E80F0035E3FC /* App */,
 				4E98039C2282B6F4002DFF90 /* SearchCell.swift */,
 			);
 			path = view;
@@ -137,13 +153,30 @@
 			path = extensions;
 			sourceTree = "<group>";
 		};
+		4ECAF7B42282E80F0035E3FC /* App */ = {
+			isa = PBXGroup;
+			children = (
+				4ECAF7B52282E8290035E3FC /* AppGroupCell.swift */,
+				4ECAF7BE2282F1800035E3FC /* AppRowCell.swift */,
+			);
+			path = App;
+			sourceTree = "<group>";
+		};
+		4ECAF7B92282EA3E0035E3FC /* APP */ = {
+			isa = PBXGroup;
+			children = (
+				4ECAF7B22282E7D80035E3FC /* AppsListVC.swift */,
+				4ECAF7BC2282EC8B0035E3FC /* AppListHorizentalVC.swift */,
+			);
+			path = APP;
+			sourceTree = "<group>";
+		};
 		AF3A308EEDBE6D8AC799A685 /* Pods */ = {
 			isa = PBXGroup;
 			children = (
 				1104D4FC47C6E94C6DA4D811 /* Pods-App Store.debug.xcconfig */,
 				37A1F17340391B4B5FC93105 /* Pods-App Store.release.xcconfig */,
 			);
-			name = Pods;
 			path = Pods;
 			sourceTree = "<group>";
 		};
@@ -267,9 +300,15 @@
 			isa = PBXSourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				4ECAF7BD2282EC8B0035E3FC /* AppListHorizentalVC.swift in Sources */,
+				4ECAF7B32282E7D80035E3FC /* AppsListVC.swift in Sources */,
 				4E9803A02282B7CE002DFF90 /* UIView.swift in Sources */,
+				4ECAF7B12282E79A0035E3FC /* BaseListController.swift in Sources */,
 				4E9803992282B127002DFF90 /* MainTabBarVC.swift in Sources */,
+				4ECAF7B82282E8C10035E3FC /* BaseCell.swift in Sources */,
+				4ECAF7BF2282F1800035E3FC /* AppRowCell.swift in Sources */,
 				4E9803A22282B852002DFF90 /* ExtensionUivew.swift in Sources */,
+				4ECAF7B62282E8290035E3FC /* AppGroupCell.swift in Sources */,
 				4E98039D2282B6F4002DFF90 /* SearchCell.swift in Sources */,
 				4E98039B2282B50C002DFF90 /* AppSearchVC.swift in Sources */,
 				4E6752682282CCC500DB6A70 /* Services.swift in Sources */,

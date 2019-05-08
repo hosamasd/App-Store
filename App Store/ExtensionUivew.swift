@@ -116,3 +116,29 @@ extension UIColor{
         self.init(red: r/255, green: g/255, blue: b/255, alpha: 1)
     }
 }
+
+extension UILabel {
+    convenience init(string:String, font:UIFont){
+    self.init(frame: .zero)
+        self.text = string
+        self.font = font
+    }
+}
+
+extension UIImageView {
+    convenience init(cornerRdius:CGFloat){
+        self.init(image: nil)
+        self.layer.cornerRadius = cornerRdius
+        self.contentMode = .scaleAspectFill
+        self.clipsToBounds = true
+       
+    }
+}
+
+extension UIButton {
+    convenience init(title:String) {
+        self.init(type: .system)
+        self.setTitle(title, for: .normal)
+        
+    }
+}

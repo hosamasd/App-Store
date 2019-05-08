@@ -8,7 +8,7 @@
 
 import UIKit
 
-class AppSearchVC: UICollectionViewController, UICollectionViewDelegateFlowLayout {
+class AppSearchVC: BaseListController, UICollectionViewDelegateFlowLayout {
     
     let defaultTextLable:UILabel = {
        let la = UILabel()
@@ -82,13 +82,7 @@ class AppSearchVC: UICollectionViewController, UICollectionViewDelegateFlowLayou
         collectionView.register(SearchCell.self, forCellWithReuseIdentifier: cellId)
     }
     
-    init() {
-        super.init(collectionViewLayout: UICollectionViewFlowLayout())
-    }
     
-    required init?(coder aDecoder: NSCoder) {
-        fatalError("init(coder:) has not been implemented")
-    }
     
 }
 
