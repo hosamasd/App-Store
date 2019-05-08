@@ -7,7 +7,7 @@
 //
 
 import UIKit
-
+import SDWebImage
 class SearchCell: UICollectionViewCell {
     
     var apps:Result? {
@@ -16,7 +16,20 @@ class SearchCell: UICollectionViewCell {
         self.appNameLabel.text = app.trackName
             self.appCategLabel.text = app.primaryGenreName
             
-            self.appSizeLabel.text = "Rating: \(app.averageUserRating ?? 0)"
+          
+            
+            self.appImage.sd_setImage(with: URL(string: app.artworkUrl100))
+              self.appScreenShot1Image.sd_setImage(with: URL(string: app.screenshotUrls[0]))
+          
+            if app.screenshotUrls.count > 1 {
+                 self.appScreenShot2Image.sd_setImage(with: URL(string: app.screenshotUrls[1]))
+            }
+            if app.screenshotUrls.count > 2 {
+                self.appScreenShot3Image.sd_setImage(with: URL(string: app.screenshotUrls[2]))
+            }
+            
+            
+            self.ratingsLabel.text = "Rating: \(app.averageUserRating ?? 0)"
         }
     }
     
@@ -24,7 +37,6 @@ class SearchCell: UICollectionViewCell {
         let im = UIImageView()
         im.layer.cornerRadius = 12
         im.clipsToBounds = true
-        im.backgroundColor = .red
         im.widthAnchor.constraint(equalToConstant: 64).isActive = true
         im.heightAnchor.constraint(equalToConstant: 64).isActive = true
         return im
@@ -32,22 +44,16 @@ class SearchCell: UICollectionViewCell {
    
     let appNameLabel:UILabel = {
         let la = UILabel()
-        la.text = "app name"
-        la.font = UIFont.systemFont(ofSize: 16)
-        
+      
         return la
     }()
     let appCategLabel:UILabel = {
         let la = UILabel()
-        la.text = "Photos"
-        la.font = UIFont.systemFont(ofSize: 16)
-        
+      
         return la
     }()
-    let appSizeLabel:UILabel = {
+    let ratingsLabel:UILabel = {
         let la = UILabel()
-        la.text = "5.5 M"
-        la.font = UIFont.systemFont(ofSize: 16)
         return la
     }()
     lazy var getButton:UIButton = {
@@ -75,8 +81,12 @@ class SearchCell: UICollectionViewCell {
     
     func createScreenSots() -> UIImageView {
         let im = UIImageView()
-        im.backgroundColor = .blue
-        
+       im.backgroundColor = .blue
+        im.layer.cornerRadius = 8
+        im.clipsToBounds = true
+        im.layer.borderWidth = 0.5
+        im.contentMode = .scaleAspectFill
+        im.layer.borderColor = UIColor(white: 0.5, alpha: 0.5).cgColor
         return im
     }
     required init?(coder aDecoder: NSCoder) {
@@ -85,7 +95,7 @@ class SearchCell: UICollectionViewCell {
     
     func setupViews()  {
         
-        let stacksLabel = getStacks(views: appNameLabel,appCategLabel,appSizeLabel, axis: .vertical, space: 10)
+        let stacksLabel = getStacks(views: appNameLabel,appCategLabel,ratingsLabel, axis: .vertical, space: 0)
         let infoAppStack = getStacks(views: appImage,stacksLabel,getButton, axis: .horizontal, space: 12)
         infoAppStack.alignment = .center
         
