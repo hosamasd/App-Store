@@ -10,20 +10,33 @@ import UIKit
 
 class AppSearchVC: UICollectionViewController, UICollectionViewDelegateFlowLayout {
     
+    let defaultTextLable:UILabel = {
+       let la = UILabel()
+        la.text = "Please enter search item above"
+        la.textAlignment = .center
+        la.font = UIFont.boldSystemFont(ofSize: 18)
+        
+        return la
+    }()
     
     
     fileprivate let cellId = "cellId"
     fileprivate var appResultsArray = [Result]()
-   
+   fileprivate let searchController = UISearchController(searchResultsController: nil)
+    var timer:Timer?
     
     override func viewDidLoad() {
         super.viewDidLoad()
+        
+        collectionView.addSubview(defaultTextLable)
+        defaultTextLable.fillSuperview(padding: .init(top: 100, left: 50, bottom: 0, right: 50))
         setupCollectionView()
-        fetchAppsFromItubes()
+        setupSearchController()
+//        fetchAppsFromItubes()
     }
     
     func fetchAppsFromItubes()  {
-        Services.shared.fetchApps { (res, err) in
+        Services.shared.fetchApps(searchText: "instagram") { (res, err) in
             if err != nil {
                 print("error to fetch apps ",err?.localizedDescription)
                 return
@@ -35,11 +48,22 @@ class AppSearchVC: UICollectionViewController, UICollectionViewDelegateFlowLayou
             }
         }
     }
+    
+    func setupSearchController()  {
+        definesPresentationContext = true
+        navigationItem.searchController = searchController
+        navigationItem.hidesSearchBarWhenScrolling = false
+        searchController.dimsBackgroundDuringPresentation = false
+        searchController.searchBar.delegate = self
+    }
+    
     override func collectionView(_ collectionView: UICollectionView, numberOfItemsInSection section: Int) -> Int {
+        defaultTextLable.isHidden = appResultsArray.count != 0
         return appResultsArray.count
     }
     
     override func collectionView(_ collectionView: UICollectionView, cellForItemAt indexPath: IndexPath) -> UICollectionViewCell {
+      
         let cell = collectionView.dequeueReusableCell(withReuseIdentifier: cellId, for: indexPath) as! SearchCell
         let apps = appResultsArray[indexPath.row]
         
@@ -64,6 +88,31 @@ class AppSearchVC: UICollectionViewController, UICollectionViewDelegateFlowLayou
     
     required init?(coder aDecoder: NSCoder) {
         fatalError("init(coder:) has not been implemented")
+    }
+    
+}
+
+extension AppSearchVC :UISearchBarDelegate {
+    
+    func searchBar(_ searchBar: UISearchBar, textDidChange searchText: String) {
+        print(searchText)
+        self.appResultsArray.removeAll()
+        timer?.invalidate()
+        timer = Timer.scheduledTimer(withTimeInterval: 0.5, repeats: false, block: { (_) in
+            
+            Services.shared.fetchApps(searchText: searchText) { (res, err) in
+                if err != nil {
+                    print("error to fetch apps ",err?.localizedDescription)
+                    return
+                }
+                
+                self.appResultsArray = res
+                DispatchQueue.main.async {
+                    self.collectionView.reloadData()
+                }
+            }
+        })
+        
     }
     
 }

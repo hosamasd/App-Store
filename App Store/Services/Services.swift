@@ -9,10 +9,11 @@
 import Foundation
 
 class Services {
-    let mainUrl = "https://itunes.apple.com/search?term=instagram&entity=software"
+   
     static let shared = Services()
     
-    func fetchApps(completion: @escaping ([Result], Error?) ->())  {
+    func fetchApps(searchText:String,completion: @escaping ([Result], Error?) ->())  {
+         let mainUrl = "https://itunes.apple.com/search?term=\(searchText)&entity=software"
         guard  let url = URL(string: mainUrl) else {return}
         URLSession.shared.dataTask(with: url) { (data, res, err) in
             if err != nil {
