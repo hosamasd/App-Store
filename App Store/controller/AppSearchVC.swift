@@ -53,6 +53,13 @@ class AppSearchVC: BaseListController {
         return cell
     }
     
+    override func collectionView(_ collectionView: UICollectionView, didSelectItemAt indexPath: IndexPath) {
+         let appId = self.appResultsArray[indexPath.item].trackId
+        let details = AppDetailVC(appId: appId)
+       
+        navigationController?.pushViewController(details, animated: true)
+    }
+    
     func collectionView(_ collectionView: UICollectionView, layout collectionViewLayout: UICollectionViewLayout, sizeForItemAt indexPath: IndexPath) -> CGSize {
         return .init(width: view.frame.width, height: 350)
     }

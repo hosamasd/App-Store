@@ -106,8 +106,7 @@ class AppsListVC: BaseListController {
         cell.horizentalCollectionView.appGroups = group
         cell.horizentalCollectionView.collectionView.reloadData()
         cell.horizentalCollectionView.handleIndexSelected = { [weak self] res in
-            let newVC = AppDetailVC()
-           newVC.appID = res.id
+            let newVC = AppDetailVC(appId: res.id)
             self?.navigationController?.pushViewController(newVC, animated: true)
         }
         
