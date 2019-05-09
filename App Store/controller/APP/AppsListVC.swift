@@ -15,6 +15,7 @@ class AppsListVC: BaseListController {
     var groups = [AppGroupModel]()
     var groupsSocial = [SocialAModel]()
     
+     
     let activityIndicator:UIActivityIndicatorView = {
         let ac  = UIActivityIndicatorView(style: .whiteLarge)
         ac.color = .black

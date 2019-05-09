@@ -11,6 +11,9 @@ import UIKit
 class RatingAppVC: SnappingHorizentalVC {
     
     let cellID = "cellID"
+    var rateing:Entry? 
+       
+    
     override func viewDidLoad() {
         super.viewDidLoad()
         
@@ -32,7 +35,7 @@ class RatingAppVC: SnappingHorizentalVC {
     }
     
     fileprivate func setupCollectionView() {
-        
+        collectionView.backgroundColor = .white
         collectionView.register(RatingAppCell.self, forCellWithReuseIdentifier: cellID)
         
         collectionView.contentInset = .init(top: 0, left: 16, bottom: 0, right: 16)

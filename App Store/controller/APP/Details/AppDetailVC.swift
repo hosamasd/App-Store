@@ -15,17 +15,29 @@ class AppDetailVC: BaseListController {
     let cellRating = "cellRating"
     
     var appResult:Result?
+    var ratings:RatingModel?
     
     var appID:String! {didSet{
          let url = "https://itunes.apple.com/lookup?id=\(appID ?? "")"
         Services.shared.fetchGenericJSONData(urlString: url) { (res:AppResultModel? , err) in
             self.appResult =  res?.results.first
             
+            
+            DispatchQueue.main.async {
+                self.collectionView.reloadData()
+            }
+        }
+        
+         let reviewsUrl = "https://itunes.apple.com/rss/customerreviews/page=1/id=\(appID ?? "")/sortby=mostrecent/json?l=en&cc=us"
+        Services.shared.fetchGenericJSONData(urlString: reviewsUrl) { (rate:RatingModel?, err) in
+          self.ratings = rate
+            
             DispatchQueue.main.async {
                 self.collectionView.reloadData()
             }
         }
         }}
+    
     
     override func viewDidLoad() {
         super.viewDidLoad()
@@ -44,16 +56,21 @@ class AppDetailVC: BaseListController {
             return cell
         }else if indexPath.item == 1 {
             let cellPre = collectionView.dequeueReusableCell(withReuseIdentifier: cellPrevID, for: indexPath) as! AppPreviewCell
-            cellPre.horizentalCollectionView.appsArray = self.appResult
-            cellPre.horizentalCollectionView.collectionView.reloadData()
+            cellPre.reviewHorizentalCollectionView.appsArray = self.appResult
+            cellPre.reviewHorizentalCollectionView.collectionView.reloadData()
             return cellPre
         }
         else {
             let cellRate = collectionView.dequeueReusableCell(withReuseIdentifier: cellRating, for: indexPath) as! AppRatingCell
-            
+            cellRate.ratingHorizentalCollectionView.rateing = self.ratings?.feed.entry[indexPath.item]
+            cellRate.ratingHorizentalCollectionView.collectionView.reloadData()
             return cellRate
         }
         
+    }
+    
+    func collectionView(_ collectionView: UICollectionView, layout collectionViewLayout: UICollectionViewLayout, insetForSectionAt section: Int) -> UIEdgeInsets {
+        return .init(top: 0, left: 0, bottom: 16, right: 0)
     }
     
     func collectionView(_ collectionView: UICollectionView, layout collectionViewLayout: UICollectionViewLayout, sizeForItemAt indexPath: IndexPath) -> CGSize {

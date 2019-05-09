@@ -12,13 +12,13 @@ class AppPreviewCell: BaseCell {
     
     let titleLabel =  UILabel(string: "Preview", font: .boldSystemFont(ofSize: 30))
       
-    let horizentalCollectionView = PreviewScreenShotVC()
+    let reviewHorizentalCollectionView = PreviewScreenShotVC()
     override func setupViews() {
      
         addSubview(titleLabel)
-        addSubview(horizentalCollectionView.view)
+        addSubview(reviewHorizentalCollectionView.view)
         titleLabel.anchor(top: topAnchor, leading: leadingAnchor, bottom: nil, trailing: trailingAnchor,padding: .init(top: 16, left: 16, bottom: 16, right: 0))
         
-        horizentalCollectionView.view.anchor(top: titleLabel.bottomAnchor, leading: leadingAnchor, bottom: bottomAnchor, trailing: trailingAnchor)
+        reviewHorizentalCollectionView.view.anchor(top: titleLabel.bottomAnchor, leading: leadingAnchor, bottom: bottomAnchor, trailing: trailingAnchor)
     }
 }
