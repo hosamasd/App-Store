@@ -118,10 +118,11 @@ extension UIColor{
 }
 
 extension UILabel {
-    convenience init(string:String, font:UIFont){
+    convenience init(string:String, font:UIFont,numberOfLines:Int = 1){
     self.init(frame: .zero)
         self.text = string
         self.font = font
+        self.numberOfLines = numberOfLines
     }
 }
 
@@ -140,5 +141,12 @@ extension UIButton {
         self.init(type: .system)
         self.setTitle(title, for: .normal)
         
+    }
+}
+
+extension UIStackView {
+    convenience init(arrangedSubviews: [UIView], customSpacing: CGFloat = 0) {
+        self.init(arrangedSubviews: arrangedSubviews)
+        self.spacing = customSpacing
     }
 }
