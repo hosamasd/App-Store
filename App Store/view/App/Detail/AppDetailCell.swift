@@ -54,8 +54,6 @@ class AppDetailCell: UICollectionViewCell {
     }
     
      func setupViews() {
-        backgroundColor = .lightGray
-        
         let stackView = VerticalStackView(arrangedSubviews: [
             UIStackView(arrangedSubviews: [
                 appImage,
