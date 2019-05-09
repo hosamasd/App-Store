@@ -16,6 +16,8 @@ class AppListHorizentalVC: SnappingHorizentalVC  {
     let topBottomPadding:CGFloat = 12
     let linrSpacing:CGFloat = 10
     
+    var handleIndexSelected:((FeedResult) -> ())?
+    
     override func viewDidLoad() {
         super.viewDidLoad()
         
@@ -26,6 +28,13 @@ class AppListHorizentalVC: SnappingHorizentalVC  {
     
     override func collectionView(_ collectionView: UICollectionView, numberOfItemsInSection section: Int) -> Int {
         return appGroups?.feed.results.count ?? 0
+    }
+    
+    override func collectionView(_ collectionView: UICollectionView, didSelectItemAt indexPath: IndexPath) {
+        if let index = self.appGroups?.feed.results[indexPath.item] {
+            handleIndexSelected?(index)
+        }
+       
     }
     
     override func collectionView(_ collectionView: UICollectionView, cellForItemAt indexPath: IndexPath) -> UICollectionViewCell {

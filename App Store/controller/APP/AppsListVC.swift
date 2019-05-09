@@ -104,6 +104,12 @@ class AppsListVC: BaseListController {
         cell.titleLabel.text = group.feed.title
         cell.horizentalCollectionView.appGroups = group
         cell.horizentalCollectionView.collectionView.reloadData()
+        cell.horizentalCollectionView.handleIndexSelected = { [weak self] res in
+            let newVC = AppDetailVC()
+           newVC.appID = res.id
+            self?.navigationController?.pushViewController(newVC, animated: true)
+        }
+        
         
         return cell
     }
