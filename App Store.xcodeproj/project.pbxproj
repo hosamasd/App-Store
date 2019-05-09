@@ -9,8 +9,10 @@
 /* Begin PBXBuildFile section */
 		39234310276E2C4832DD51F4 /* Pods_App_Store.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = F07A2AD4AC696EB1B347AB60 /* Pods_App_Store.framework */; };
 		4E6465462283325800EA4623 /* SocialAModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4E6465452283325800EA4623 /* SocialAModel.swift */; };
+		4E64E2EA22840E26003C7A85 /* SnappingHorizentalVC.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4E64E2E922840E26003C7A85 /* SnappingHorizentalVC.swift */; };
 		4E6752652282C70F00DB6A70 /* AppResultModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4E6752642282C70F00DB6A70 /* AppResultModel.swift */; };
 		4E6752682282CCC500DB6A70 /* Services.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4E6752672282CCC500DB6A70 /* Services.swift */; };
+		4E765F2922841C430025BED6 /* BetterSnappingLayout.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4E765F2822841C430025BED6 /* BetterSnappingLayout.swift */; };
 		4E887A862282FC86008B4E55 /* AppHeaderCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4E887A852282FC86008B4E55 /* AppHeaderCell.swift */; };
 		4E887A882282FDA1008B4E55 /* AppHeaderHorizentalVC.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4E887A872282FDA1008B4E55 /* AppHeaderHorizentalVC.swift */; };
 		4E887A8A2282FF55008B4E55 /* AppHeaderHorizentalCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4E887A892282FF55008B4E55 /* AppHeaderHorizentalCell.swift */; };
@@ -36,8 +38,10 @@
 		1104D4FC47C6E94C6DA4D811 /* Pods-App Store.debug.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-App Store.debug.xcconfig"; path = "Target Support Files/Pods-App Store/Pods-App Store.debug.xcconfig"; sourceTree = "<group>"; };
 		37A1F17340391B4B5FC93105 /* Pods-App Store.release.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-App Store.release.xcconfig"; path = "Target Support Files/Pods-App Store/Pods-App Store.release.xcconfig"; sourceTree = "<group>"; };
 		4E6465452283325800EA4623 /* SocialAModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SocialAModel.swift; sourceTree = "<group>"; };
+		4E64E2E922840E26003C7A85 /* SnappingHorizentalVC.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SnappingHorizentalVC.swift; sourceTree = "<group>"; };
 		4E6752642282C70F00DB6A70 /* AppResultModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AppResultModel.swift; sourceTree = "<group>"; };
 		4E6752672282CCC500DB6A70 /* Services.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Services.swift; sourceTree = "<group>"; };
+		4E765F2822841C430025BED6 /* BetterSnappingLayout.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = BetterSnappingLayout.swift; sourceTree = "<group>"; };
 		4E887A852282FC86008B4E55 /* AppHeaderCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AppHeaderCell.swift; sourceTree = "<group>"; };
 		4E887A872282FDA1008B4E55 /* AppHeaderHorizentalVC.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AppHeaderHorizentalVC.swift; sourceTree = "<group>"; };
 		4E887A892282FF55008B4E55 /* AppHeaderHorizentalCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AppHeaderHorizentalCell.swift; sourceTree = "<group>"; };
@@ -130,6 +134,7 @@
 			isa = PBXGroup;
 			children = (
 				4ECAF7B02282E79A0035E3FC /* BaseListController.swift */,
+				4E64E2E922840E26003C7A85 /* SnappingHorizentalVC.swift */,
 				4E9803982282B127002DFF90 /* MainTabBarVC.swift */,
 				4ECAF7B92282EA3E0035E3FC /* APP */,
 				4E98039A2282B50C002DFF90 /* AppSearchVC.swift */,
@@ -161,6 +166,7 @@
 			isa = PBXGroup;
 			children = (
 				4E98039F2282B7CE002DFF90 /* UIView.swift */,
+				4E765F2822841C430025BED6 /* BetterSnappingLayout.swift */,
 			);
 			path = extensions;
 			sourceTree = "<group>";
@@ -318,6 +324,7 @@
 				4ECAF7BD2282EC8B0035E3FC /* AppListHorizentalVC.swift in Sources */,
 				4ECAF7B32282E7D80035E3FC /* AppsListVC.swift in Sources */,
 				4E9803A02282B7CE002DFF90 /* UIView.swift in Sources */,
+				4E765F2922841C430025BED6 /* BetterSnappingLayout.swift in Sources */,
 				4ECAF7B12282E79A0035E3FC /* BaseListController.swift in Sources */,
 				4E6465462283325800EA4623 /* SocialAModel.swift in Sources */,
 				4E9803992282B127002DFF90 /* MainTabBarVC.swift in Sources */,
@@ -329,6 +336,7 @@
 				4E98039D2282B6F4002DFF90 /* SearchCell.swift in Sources */,
 				4E98039B2282B50C002DFF90 /* AppSearchVC.swift in Sources */,
 				4E6752682282CCC500DB6A70 /* Services.swift in Sources */,
+				4E64E2EA22840E26003C7A85 /* SnappingHorizentalVC.swift in Sources */,
 				4E887A862282FC86008B4E55 /* AppHeaderCell.swift in Sources */,
 				4E9803842282B068002DFF90 /* AppDelegate.swift in Sources */,
 				4E6752652282C70F00DB6A70 /* AppResultModel.swift in Sources */,

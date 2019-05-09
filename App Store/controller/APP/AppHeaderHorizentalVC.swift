@@ -8,7 +8,7 @@
 
 import UIKit
 
-class AppHeaderHorizentalVC: BaseListController {
+class AppHeaderHorizentalVC: SnappingHorizentalVC  {
     
      fileprivate let cellId = "cellId"
     var socialAppArray = [SocialAModel]()
@@ -40,9 +40,9 @@ class AppHeaderHorizentalVC: BaseListController {
         return CGSize(width: view.frame.width - 48, height: view.frame.height)
     }
     
-    func collectionView(_ collectionView: UICollectionView, layout collectionViewLayout: UICollectionViewLayout, insetForSectionAt section: Int) -> UIEdgeInsets {
-        return .init(top: 0, left: 16, bottom: 0, right: 16)
-    }
+//    func collectionView(_ collectionView: UICollectionView, layout collectionViewLayout: UICollectionViewLayout, insetForSectionAt section: Int) -> UIEdgeInsets {
+//        return .init(top: 0, left: 16, bottom: 0, right: 16)
+//    }
     
     fileprivate func setupCollectionView() {
         collectionView.backgroundColor = .yellow
@@ -54,5 +54,6 @@ class AppHeaderHorizentalVC: BaseListController {
         collectionView.backgroundColor = .white
         
         collectionView.register(AppHeaderHorizentalCell.self, forCellWithReuseIdentifier: cellId)
+        collectionView.contentInset = .init(top: 0, left: 16, bottom: 0, right: 16)
     }
 }

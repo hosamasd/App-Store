@@ -8,7 +8,7 @@
 
 import UIKit
 
-class AppListHorizentalVC: BaseListController  {
+class AppListHorizentalVC: SnappingHorizentalVC  {
     
     fileprivate let cellId = "cellId"
     var appGroups:AppGroupModel? 
@@ -43,9 +43,9 @@ class AppListHorizentalVC: BaseListController  {
         return .init(width: width, height: height )
     }
     
-    func collectionView(_ collectionView: UICollectionView, layout collectionViewLayout: UICollectionViewLayout, insetForSectionAt section: Int) -> UIEdgeInsets {
-        return UIEdgeInsets(top: topBottomPadding, left: 16, bottom: topBottomPadding ,right: 16)
-    }
+//    func collectionView(_ collectionView: UICollectionView, layout collectionViewLayout: UICollectionViewLayout, insetForSectionAt section: Int) -> UIEdgeInsets {
+//        return UIEdgeInsets(top: topBottomPadding, left: 16, bottom: topBottomPadding ,right: 16)
+//    }
     
     func collectionView(_ collectionView: UICollectionView, layout collectionViewLayout: UICollectionViewLayout, minimumLineSpacingForSectionAt section: Int) -> CGFloat {
         return linrSpacing
@@ -55,10 +55,9 @@ class AppListHorizentalVC: BaseListController  {
     
     fileprivate func setupCollectionView() {
         collectionView.backgroundColor = .white
-        if  let layout = collectionViewLayout as? UICollectionViewFlowLayout{
-            layout.scrollDirection = .horizontal
-        }
+       
         collectionView.register(AppRowCell.self, forCellWithReuseIdentifier: cellId)
+         collectionView.contentInset = .init(top: 0, left: 16, bottom: 0, right: 16)
     }
     
 }
