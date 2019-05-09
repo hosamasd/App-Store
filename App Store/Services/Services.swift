@@ -12,25 +12,26 @@ class Services {
    
     static let shared = Services()
     
-    func fetchApps(searchText:String,completion: @escaping ([Result], Error?) ->())  {
+    func fetchApps(searchText:String,completion: @escaping (AppResultModel?, Error?) ->())  {
          let mainUrl = "https://itunes.apple.com/search?term=\(searchText)&entity=software"
-        guard  let url = URL(string: mainUrl) else {return}
-        
-        URLSession.shared.dataTask(with: url) { (data, res, err) in
-            if err != nil {
-                print(err?.localizedDescription)
-                completion([],err)
-                return
-            }
-            guard let datas  = data else {return}
-            do{
-                let appModel = try JSONDecoder().decode(AppResultModel.self, from: datas)
-                completion(appModel.results,nil)
-           }catch let errs {
-            completion([], err)
-                print("can not to decode " ,errs.localizedDescription)
-            }
-            }.resume()
+        fetchGenericJSONData(urlString: mainUrl, completion: completion)
+//        guard  let url = URL(string: mainUrl) else {return}
+//
+//        URLSession.shared.dataTask(with: url) { (data, res, err) in
+//            if err != nil {
+//                print(err?.localizedDescription)
+//                completion([],err)
+//                return
+//            }
+//            guard let datas  = data else {return}
+//            do{
+//                let appModel = try JSONDecoder().decode(AppResultModel.self, from: datas)
+//                completion(appModel.results,nil)
+//           }catch let errs {
+//            completion([], err)
+//                print("can not to decode " ,errs.localizedDescription)
+//            }
+//            }.resume()
     }
     
     
@@ -38,37 +39,28 @@ class Services {
     
     func fetchFreeApps(completion: @escaping (AppGroupModel?, Error?) ->())  {
         let url = "https://rss.itunes.apple.com/api/v1/us/ios-apps/top-free/all/25/explicit.json"
-        fetchAppGroups(urlString: url, completion: completion)
+         fetchAppGroups(urlString: url, completion: completion)
     }
     func fetchTopGrossing(completion: @escaping (AppGroupModel?, Error?) ->())  {
          let urls = "https://rss.itunes.apple.com/api/v1/us/ios-apps/top-grossing/all/25/explicit.json"
         
         fetchAppGroups(urlString: urls, completion: completion)
-        
-        
     }
 
     func fetchAppGroups(urlString:String ,completion: @escaping (AppGroupModel?, Error?) ->())  {
-         guard  let url = URL(string: urlString) else {return}
-        URLSession.shared.dataTask(with: url) { (data, res, err) in
-            if err != nil {
-                print(err?.localizedDescription)
-                
-                completion(nil,err)
-            }
-            guard let dats = data else {return}
-            do{
-                let welcome = try JSONDecoder().decode(AppGroupModel.self, from: dats)
-                completion(welcome,nil)
-            }catch let jsonErr {
-                completion(nil,err)
-            }
-            
-            }.resume()
+        fetchGenericJSONData(urlString: urlString, completion: completion)
     }
     
     func fetchSocialApps(completion: @escaping ([SocialAModel]?, Error?) -> Void) {
         let urlString = "https://api.letsbuildthatapp.com/appstore/social"
+        
+        fetchGenericJSONData(urlString: urlString, completion: completion)
+    }
+    
+    func fetchGenericJSONData<T: Codable>(urlString:String, completion: @escaping (T?, Error?) -> ())  {
+        
+//        print("type of t is : ",T.self)
+        
         guard let url = URL(string: urlString) else { return }
         URLSession.shared.dataTask(with: url) { (data, resp, err) in
             if let err = err {
@@ -76,7 +68,7 @@ class Services {
                 return
             }
             do {
-                let objects = try JSONDecoder().decode([SocialAModel].self, from: data!)
+                let objects = try JSONDecoder().decode(T.self, from: data!)
                 // success
                 completion(objects, nil)
             } catch {

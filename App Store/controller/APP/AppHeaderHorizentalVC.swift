@@ -29,7 +29,10 @@ class AppHeaderHorizentalVC: BaseListController {
         let cell = collectionView.dequeueReusableCell(withReuseIdentifier: cellId, for: indexPath) as! AppHeaderHorizentalCell
         let social = socialAppArray[indexPath.item]
         
-        cell.socials = social
+        cell.companyLabel.text = social.name
+        cell.titleLabel.text = social.tagline
+        cell.appBigImage.sd_setImage(with: URL(string: social.imageUrl ?? ""))
+//        cell.socials = social
         return cell
     }
     
@@ -38,7 +41,7 @@ class AppHeaderHorizentalVC: BaseListController {
     }
     
     func collectionView(_ collectionView: UICollectionView, layout collectionViewLayout: UICollectionViewLayout, insetForSectionAt section: Int) -> UIEdgeInsets {
-        return .init(top: 0, left: 16, bottom: 0, right: 0)
+        return .init(top: 0, left: 16, bottom: 0, right: 16)
     }
     
     fileprivate func setupCollectionView() {

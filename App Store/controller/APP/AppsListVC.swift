@@ -15,6 +15,13 @@ class AppsListVC: BaseListController {
     var groups = [AppGroupModel]()
     var groupsSocial = [SocialAModel]()
     
+    let activityIndicator:UIActivityIndicatorView = {
+        let ac  = UIActivityIndicatorView(style: .whiteLarge)
+        ac.color = .black
+        ac.startAnimating()
+        return ac
+    }()
+    
     
     override func viewDidLoad() {
         super.viewDidLoad()
@@ -33,7 +40,7 @@ class AppsListVC: BaseListController {
         var group1: AppGroupModel?
         var group2: AppGroupModel?
         var group3: AppGroupModel?
-        var group4:[SocialAModel]?
+       
         
         //to sync data that can be fetched
         let dispatchGroup = DispatchGroup()
@@ -41,15 +48,14 @@ class AppsListVC: BaseListController {
        
           dispatchGroup.enter()
         Services.shared.fetchFreeApps { (apps, err) in
-           print("fetch free app")
                  dispatchGroup.leave()
             
            group2 = apps
         }
         
         dispatchGroup.enter()
+        
         Services.shared.fetchAppGroups(urlString: "https://rss.itunes.apple.com/api/v1/us/ios-apps/new-games-we-love/all/25/explicit.json") { (apps, err) in
-            print("fetch games")
             dispatchGroup.leave()
             
             group3 = apps
@@ -57,21 +63,20 @@ class AppsListVC: BaseListController {
         
         dispatchGroup.enter()
         Services.shared.fetchTopGrossing { (apps, err) in
-            
-            print("fetch grossing")
             dispatchGroup.leave()
             group1 = apps
         }
         
         dispatchGroup.enter()
         Services.shared.fetchSocialApps { (social, err) in
-            print("fetch social")
             dispatchGroup.leave()
-            group4 = social
+          
+            self.groupsSocial = social ?? []
         }
         
         dispatchGroup.notify(queue: .main) {
-            print("finish work")
+            
+            self.activityIndicator.stopAnimating()
             
             if let group = group3 {
                 self.groups.append(group)
@@ -83,10 +88,7 @@ class AppsListVC: BaseListController {
                 self.groups.append(group)
             }
            
-            if let group = group4 {
-                self.groupsSocial = group
-            }
-            
+          
             self.collectionView.reloadData()
         }
     }
@@ -110,6 +112,7 @@ class AppsListVC: BaseListController {
         let header = collectionView.dequeueReusableSupplementaryView(ofKind: kind, withReuseIdentifier: headerId, for: indexPath) as! AppHeaderCell
          
         header.horizentalCollectionView.socialAppArray = groupsSocial
+        header.horizentalCollectionView.collectionView.reloadData()
         return header
     }
     
@@ -123,6 +126,10 @@ class AppsListVC: BaseListController {
     
     
     fileprivate func setupCollectionView() {
+        
+        view.addSubview(activityIndicator)
+        activityIndicator.fillSuperview()
+        
         collectionView.backgroundColor = .white
         collectionView.register(AppGroupCell.self, forCellWithReuseIdentifier: cellId)
         collectionView.register(AppHeaderCell.self, forSupplementaryViewOfKind: UICollectionView.elementKindSectionHeader, withReuseIdentifier: headerId)

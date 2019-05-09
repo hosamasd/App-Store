@@ -10,27 +10,23 @@ import UIKit
 import SDWebImage
 class AppHeaderHorizentalCell: BaseCell {
     
-    var socials:SocialAModel? {
-        didSet{
-            guard let so = socials else { return  }
-            self.companyLabel.text = so.name
-            self.titleLabel.text = so.tagline
-            
-            guard let url = URL(string: so.imageUrl) else { return  }
-            self.appBigImage.sd_setImage(with: url)
-        }
-    }
-    
+//    var socials:SocialAModel? {
+//        didSet{
+//           print("data get!")
+//            self.companyLabel.text = socials?.name
+//            self.titleLabel.text = socials?.tagline
+//            self.appBigImage.sd_setImage(with: URL(string: socials?.imageUrl ?? ""))
+//        }
+//    }
+//    
     let appBigImage:UIImageView = {
         let im = UIImageView(cornerRdius: 8)
-       im.backgroundColor = .yellow
        
         return im
     }()
     
     let companyLabel:UILabel = {
         let la = UILabel(string: "Facebook", font: .boldSystemFont(ofSize: 12))
-        la.textColor = .blue
         return la
     }()
     let titleLabel:UILabel = {

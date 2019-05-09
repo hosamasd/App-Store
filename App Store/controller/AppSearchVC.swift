@@ -71,7 +71,7 @@ class AppSearchVC: BaseListController {
                 return
             }
             
-            self.appResultsArray = res
+            self.appResultsArray = res?.results ?? []
             DispatchQueue.main.async {
                 self.collectionView.reloadData()
             }
@@ -102,7 +102,7 @@ extension AppSearchVC :UISearchBarDelegate {
                     return
                 }
                 
-                self.appResultsArray = res
+                self.appResultsArray = res?.results ?? []
                 DispatchQueue.main.async {
                     self.collectionView.reloadData()
                 }
