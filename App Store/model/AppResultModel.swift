@@ -14,7 +14,7 @@ struct AppResultModel : Codable{
 }
 
 struct Result: Codable {
-    let trackId :String
+    let trackId :Int
     let  trackName:String
     let primaryGenreName: String
     var averageUserRating:Float?

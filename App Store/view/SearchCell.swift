@@ -8,6 +8,7 @@
 
 import UIKit
 import SDWebImage
+
 class SearchCell: BaseCell {
     
     var apps:Result? {
@@ -17,7 +18,6 @@ class SearchCell: BaseCell {
             self.appCategLabel.text = app.primaryGenreName
             
           
-            
             self.appImage.sd_setImage(with: URL(string: app.artworkUrl100))
               self.appScreenShot1Image.sd_setImage(with: URL(string: app.screenshotUrls[0]))
           

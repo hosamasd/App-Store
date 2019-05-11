@@ -23,24 +23,24 @@ class AppFullScreenVC: UITableViewController {
     }
     
     override func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {
-        let cell: UITableViewCell!
+        var cell: UITableViewCell!
         
         if indexPath.row == 0 {
-            //hacking
-            let cell = UITableViewCell()
-            let dumyCell = TodayCell()
-            cell.addSubview(dumyCell)
-            dumyCell.centerInSuperview(size: .init(width: 250, height: 250))
-            return cell
-        }
+           
+           
+            cell =  AppFullScreenHeaderCell()
+        }else {
         
          cell = tableView.dequeueReusableCell(withIdentifier: cellId, for: indexPath) as! AppFullScreenCell
-        
+        }
         return cell
     }
     
     override func tableView(_ tableView: UITableView, heightForRowAt indexPath: IndexPath) -> CGFloat {
-        return 450
+        if indexPath.row == 0 {
+            return 450
+        }
+        return super.tableView(tableView, heightForRowAt: indexPath)
     }
 
     

@@ -38,8 +38,11 @@ class AppDetailVC: BaseListController {
     }
     
     func fetchData()  {
-        let url = "https://itunes.apple.com/lookup?id=\(appId )"
+        let url = "https://itunes.apple.com/lookup?id=\(appId)"
         Services.shared.fetchGenericJSONData(urlString: url) { (res:AppResultModel? , err) in
+            if err != nil {
+                print("error        ",err)
+            }
             self.appResult =  res?.results.first
             
             
@@ -48,7 +51,7 @@ class AppDetailVC: BaseListController {
             }
         }
         
-        let reviewsUrl = "https://itunes.apple.com/rss/customerreviews/page=1/id=\(appId )/sortby=mostrecent/json?l=en&cc=us"
+        let reviewsUrl = "https://itunes.apple.com/rss/customerreviews/page=1/id=\(appId)/sortby=mostrecent/json?l=en&cc=us"
         Services.shared.fetchGenericJSONData(urlString: reviewsUrl) { (rate:RatingModel?, err) in
             self.ratings = rate
             
@@ -57,6 +60,7 @@ class AppDetailVC: BaseListController {
             }
         }
     }
+    
     override func collectionView(_ collectionView: UICollectionView, numberOfItemsInSection section: Int) -> Int {
         return 3
     }

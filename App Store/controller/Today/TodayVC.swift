@@ -30,7 +30,12 @@ class TodayVC: BaseListController {
         return cell
     }
     
-    var appFullVC:UIViewController!
+    var appFullVC:AppFullScreenVC!
+    
+    var topCons:NSLayoutConstraint?
+    var leadingCons:NSLayoutConstraint?
+    var widthCons:NSLayoutConstraint?
+    var heightCons:NSLayoutConstraint?
     
     override func collectionView(_ collectionView: UICollectionView, didSelectItemAt indexPath: IndexPath) {
         let appFullVC = AppFullScreenVC()
@@ -47,10 +52,28 @@ class TodayVC: BaseListController {
         //absolute cord of cell
         guard let startFrame = cell.superview?.convert(cell.frame, to: nil) else { return  }
         self.startingFrame = startFrame
-        redView.frame = startFrame
+        
+        redView.translatesAutoresizingMaskIntoConstraints = false
+        
+         topCons = redView.topAnchor.constraint(equalTo: view.topAnchor, constant: startFrame.origin.y)
+          leadingCons = redView.leadingAnchor.constraint(equalTo: view.leadingAnchor, constant: startFrame.origin.x)
+         widthCons = redView.widthAnchor.constraint(equalToConstant: startFrame.width)
+         heightCons = redView.heightAnchor.constraint(equalToConstant: startFrame.height)
+        
+        [topCons, leadingCons, heightCons, widthCons].forEach({$0?.isActive = true})
+        
+        self.view.layoutIfNeeded()
         
         UIView.animate(withDuration: 0.7, delay: 0, usingSpringWithDamping: 0.7, initialSpringVelocity: 0.7, options: .curveEaseInOut, animations: {
-            redView.frame = self.view.frame
+           
+            
+            
+            self.topCons?.constant = 0
+            self.leadingCons?.constant = 0
+            self.widthCons?.constant = self.view.frame.width
+            self.heightCons?.constant = self.view.frame.height
+            
+            self.view.layoutIfNeeded() // start animation
             self.tabBarController?.tabBar.transform = CGAffineTransform(translationX: 0, y: 100)
         }, completion: nil)
     }
@@ -58,9 +81,19 @@ class TodayVC: BaseListController {
     
   @objc  func handleRemoveView(gesture: UITapGestureRecognizer)  {
     UIView.animate(withDuration: 0.7, delay: 0, usingSpringWithDamping: 0.7, initialSpringVelocity: 0.7, options: .curveEaseInOut, animations: {
-        gesture.view?.frame = self.startingFrame ?? .zero
+        
+        self.appFullVC.tableView.contentOffset = .zero
+        
+        guard let startingFrame = self.startingFrame else{return}
+        self.topCons?.constant = startingFrame.origin.y
+        self.leadingCons?.constant = startingFrame.origin.x
+        self.widthCons?.constant = startingFrame.width
+        self.heightCons?.constant = startingFrame.height
+        
+        self.view.layoutIfNeeded() // start animation
         self.tabBarController?.tabBar.transform = .identity
     }) { (_) in
+       
         gesture.view?.removeFromSuperview()
         self.appFullVC.removeFromParent()
     }

@@ -27,6 +27,7 @@ class RatingAppVC: SnappingHorizentalVC {
     override func collectionView(_ collectionView: UICollectionView, cellForItemAt indexPath: IndexPath) -> UICollectionViewCell {
         let cell = collectionView.dequeueReusableCell(withReuseIdentifier: cellID, for: indexPath) as! RatingAppCell
        
+        cell.rates = rateing
         return cell
     }
     

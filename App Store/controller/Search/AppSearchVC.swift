@@ -54,7 +54,7 @@ class AppSearchVC: BaseListController {
     }
     
     override func collectionView(_ collectionView: UICollectionView, didSelectItemAt indexPath: IndexPath) {
-         let appId = self.appResultsArray[indexPath.item].trackId
+         let appId = String(self.appResultsArray[indexPath.item].trackId)
         let details = AppDetailVC(appId: appId)
        
         navigationController?.pushViewController(details, animated: true)
@@ -72,7 +72,7 @@ class AppSearchVC: BaseListController {
     }
     
  fileprivate   func fetchAppsFromItubes()  {
-        Services.shared.fetchApps(searchText: "instagram") { (res, err) in
+        Services.shared.fetchApps(searchText: "Instagram") { (res, err) in
             if err != nil {
                 print("error to fetch apps ",err?.localizedDescription)
                 return
@@ -99,7 +99,7 @@ extension AppSearchVC :UISearchBarDelegate {
     
     func searchBar(_ searchBar: UISearchBar, textDidChange searchText: String) {
         print(searchText)
-        self.appResultsArray.removeAll()
+//        self.appResultsArray.removeAll()
         timer?.invalidate()
         timer = Timer.scheduledTimer(withTimeInterval: 0.5, repeats: false, block: { (_) in
             
