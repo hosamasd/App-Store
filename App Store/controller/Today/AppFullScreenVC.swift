@@ -11,7 +11,10 @@ import UIKit
 class AppFullScreenVC: UITableViewController {
     
     let cellId = "cellId"
+    var item:TodayItem?
     
+    var handleCloseClosure:(() ->())?
+
     override func viewDidLoad() {
         super.viewDidLoad()
         
@@ -23,16 +26,21 @@ class AppFullScreenVC: UITableViewController {
     }
     
     override func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {
-        var cell: UITableViewCell!
+      
         
         if indexPath.row == 0 {
            
            
-            cell =  AppFullScreenHeaderCell()
-        }else {
-        
-         cell = tableView.dequeueReusableCell(withIdentifier: cellId, for: indexPath) as! AppFullScreenCell
+          let  cellHeader =  AppFullScreenHeaderCell()
+        cellHeader.mainImageCell.items = item
+            cellHeader.closeButton.addTarget(self, action: #selector(handleDismiss), for: .touchUpInside)
+            return cellHeader
+            
         }
+        
+        let cell = tableView.dequeueReusableCell(withIdentifier: cellId, for: indexPath) as! AppFullScreenCell
+        
+        
         return cell
     }
     
@@ -46,5 +54,13 @@ class AppFullScreenVC: UITableViewController {
     
     func setupTableViews()  {
         tableView.register(AppFullScreenCell.self, forCellReuseIdentifier: cellId)
+        tableView.tableFooterView = UIView()
+        tableView.allowsSelection = false
+        tableView.separatorStyle = .none
+    }
+    
+    @objc func handleDismiss(sender: UIButton)  {
+    sender.isHidden = true
+        handleCloseClosure?()
     }
 }

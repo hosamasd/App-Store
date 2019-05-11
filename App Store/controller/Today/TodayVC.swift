@@ -12,7 +12,10 @@ class TodayVC: BaseListController {
     
     fileprivate let cellId = "cellId"
     
-   
+    let items = [
+        TodayItem.init(category: "LIFE HACK", title: "Utilizing your Time", image: #imageLiteral(resourceName: "garden"), description: "All the tools and apps you need to intelligently organize your life the right way.", backgroundColor: .white),
+        TodayItem.init(category: "HOLIDAYS", title: "Travel on a Budget", image: #imageLiteral(resourceName: "holiday"), description: "Find out all you need to know on how to travel without packing everything!", backgroundColor: #colorLiteral(red: 0.9838578105, green: 0.9588007331, blue: 0.7274674177, alpha: 1))
+    ]
     
     override func viewDidLoad() {
         super.viewDidLoad()
@@ -20,13 +23,14 @@ class TodayVC: BaseListController {
     }
     
     override func collectionView(_ collectionView: UICollectionView, numberOfItemsInSection section: Int) -> Int {
-        return 5
+        return items.count
     }
     
     override func collectionView(_ collectionView: UICollectionView, cellForItemAt indexPath: IndexPath) -> UICollectionViewCell {
         let cell = collectionView.dequeueReusableCell(withReuseIdentifier: cellId, for: indexPath) as! TodayCell
+        let item = items[indexPath.row]
         
-       
+       cell.items = item
         return cell
     }
     
@@ -39,14 +43,21 @@ class TodayVC: BaseListController {
     
     override func collectionView(_ collectionView: UICollectionView, didSelectItemAt indexPath: IndexPath) {
         let appFullVC = AppFullScreenVC()
+         appFullVC.item = self.items[indexPath.row]
+        appFullVC.handleCloseClosure = {
+           
+            self.handleRemoveView()
+        }
         let redView = appFullVC.view!
-        redView.addGestureRecognizer(UITapGestureRecognizer(target: self, action: #selector(handleRemoveView)))
         
         addChild(appFullVC)
         self.appFullVC = appFullVC
         redView.layer.cornerRadius = 16
         
         view.addSubview(redView)
+        
+         self.collectionView.isUserInteractionEnabled = false
+        
         guard let cell = collectionView.cellForItem(at: indexPath) else { return  }
         
         //absolute cord of cell
@@ -79,7 +90,7 @@ class TodayVC: BaseListController {
     }
     var startingFrame: CGRect?
     
-  @objc  func handleRemoveView(gesture: UITapGestureRecognizer)  {
+  @objc  func handleRemoveView()  {
     UIView.animate(withDuration: 0.7, delay: 0, usingSpringWithDamping: 0.7, initialSpringVelocity: 0.7, options: .curveEaseInOut, animations: {
         
         self.appFullVC.tableView.contentOffset = .zero
@@ -94,8 +105,9 @@ class TodayVC: BaseListController {
         self.tabBarController?.tabBar.transform = .identity
     }) { (_) in
        
-        gesture.view?.removeFromSuperview()
+        self.appFullVC.view.removeFromSuperview()
         self.appFullVC.removeFromParent()
+        self.collectionView.isUserInteractionEnabled = true
     }
     }
     

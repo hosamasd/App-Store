@@ -18,6 +18,8 @@ class AppFullScreenHeaderCell: UITableViewCell {
         return bt
     }()
     
+    
+    
     override init(style: UITableViewCell.CellStyle, reuseIdentifier: String?) {
         super.init(style: style, reuseIdentifier: reuseIdentifier)
         
@@ -37,6 +39,6 @@ class AppFullScreenHeaderCell: UITableViewCell {
     }
     
    @objc func handleDimiss()  {
-        print(123)
+//    handleCloseClosure(self.superview, <#()#>)
     }
 }
