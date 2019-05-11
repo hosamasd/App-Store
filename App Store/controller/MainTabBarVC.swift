@@ -23,7 +23,7 @@ class MainTabBarVC: UITabBarController {
     
     fileprivate func setupViewControllers() {
         
-        let today = templateNavControllerVC(title: "Today", selectedImage: #imageLiteral(resourceName: "today_icon"), rootViewController: UIViewController())
+        let today = templateNavControllerVC(title: "Today", selectedImage: #imageLiteral(resourceName: "today_icon"), rootViewController: TodayVC())
         let search = templateNavControllerVC(title: "Search", selectedImage: #imageLiteral(resourceName: "search"), rootViewController: AppSearchVC() )
         let apps = templateNavControllerVC(title: "Apps", selectedImage: #imageLiteral(resourceName: "apps"), rootViewController: AppsListVC())
         
@@ -31,9 +31,10 @@ class MainTabBarVC: UITabBarController {
         tabBar.tintColor = .black
         
         viewControllers = [
+             today,
              apps,
             search,
-            today,
+           
            
            ]
         
