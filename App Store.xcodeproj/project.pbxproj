@@ -13,8 +13,12 @@
 		4E6752652282C70F00DB6A70 /* AppResultModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4E6752642282C70F00DB6A70 /* AppResultModel.swift */; };
 		4E6752682282CCC500DB6A70 /* Services.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4E6752672282CCC500DB6A70 /* Services.swift */; };
 		4E68D3D12286E58600947BE2 /* TodayItem.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4E68D3D02286E58600947BE2 /* TodayItem.swift */; };
+		4E6BB585228711AE00168456 /* AppTodayMultiVC.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4E6BB584228711AE00168456 /* AppTodayMultiVC.swift */; };
+		4E6BB587228711F100168456 /* AppTodayMultiCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4E6BB586228711F100168456 /* AppTodayMultiCell.swift */; };
 		4E765F2922841C430025BED6 /* BetterSnappingLayout.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4E765F2822841C430025BED6 /* BetterSnappingLayout.swift */; };
 		4E765F2C228421C50025BED6 /* AppDetailVC.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4E765F2B228421C50025BED6 /* AppDetailVC.swift */; };
+		4E85DD032286FE8800BC2A1F /* AppTodayMultipleCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4E85DD022286FE8800BC2A1F /* AppTodayMultipleCell.swift */; };
+		4E85DD052287055F00BC2A1F /* BaseTodayItemCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4E85DD042287055F00BC2A1F /* BaseTodayItemCell.swift */; };
 		4E887A862282FC86008B4E55 /* AppHeaderCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4E887A852282FC86008B4E55 /* AppHeaderCell.swift */; };
 		4E887A882282FDA1008B4E55 /* AppHeaderHorizentalVC.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4E887A872282FDA1008B4E55 /* AppHeaderHorizentalVC.swift */; };
 		4E887A8A2282FF55008B4E55 /* AppHeaderHorizentalCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4E887A892282FF55008B4E55 /* AppHeaderHorizentalCell.swift */; };
@@ -58,8 +62,12 @@
 		4E6752642282C70F00DB6A70 /* AppResultModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AppResultModel.swift; sourceTree = "<group>"; };
 		4E6752672282CCC500DB6A70 /* Services.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Services.swift; sourceTree = "<group>"; };
 		4E68D3D02286E58600947BE2 /* TodayItem.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = TodayItem.swift; sourceTree = "<group>"; };
+		4E6BB584228711AE00168456 /* AppTodayMultiVC.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AppTodayMultiVC.swift; sourceTree = "<group>"; };
+		4E6BB586228711F100168456 /* AppTodayMultiCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AppTodayMultiCell.swift; sourceTree = "<group>"; };
 		4E765F2822841C430025BED6 /* BetterSnappingLayout.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = BetterSnappingLayout.swift; sourceTree = "<group>"; };
 		4E765F2B228421C50025BED6 /* AppDetailVC.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AppDetailVC.swift; sourceTree = "<group>"; };
+		4E85DD022286FE8800BC2A1F /* AppTodayMultipleCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AppTodayMultipleCell.swift; sourceTree = "<group>"; };
+		4E85DD042287055F00BC2A1F /* BaseTodayItemCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = BaseTodayItemCell.swift; sourceTree = "<group>"; };
 		4E887A852282FC86008B4E55 /* AppHeaderCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AppHeaderCell.swift; sourceTree = "<group>"; };
 		4E887A872282FDA1008B4E55 /* AppHeaderHorizentalVC.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AppHeaderHorizentalVC.swift; sourceTree = "<group>"; };
 		4E887A892282FF55008B4E55 /* AppHeaderHorizentalCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AppHeaderHorizentalCell.swift; sourceTree = "<group>"; };
@@ -240,6 +248,7 @@
 			children = (
 				4E99CCAE2286A45C006702DD /* TodayVC.swift */,
 				4E99CCB32286ACEB006702DD /* AppFullScreenVC.swift */,
+				4E6BB584228711AE00168456 /* AppTodayMultiVC.swift */,
 			);
 			path = Today;
 			sourceTree = "<group>";
@@ -247,9 +256,12 @@
 		4E99CCB02286A528006702DD /* Today */ = {
 			isa = PBXGroup;
 			children = (
+				4E85DD042287055F00BC2A1F /* BaseTodayItemCell.swift */,
 				4E99CCB12286A53E006702DD /* TodayCell.swift */,
 				4E99CCB52286AF90006702DD /* AppFullScreenCell.swift */,
 				4E9ED5D52286CCD700DAF968 /* AppFullScreenHeaderCell.swift */,
+				4E85DD022286FE8800BC2A1F /* AppTodayMultipleCell.swift */,
+				4E6BB586228711F100168456 /* AppTodayMultiCell.swift */,
 			);
 			path = Today;
 			sourceTree = "<group>";
@@ -446,18 +458,22 @@
 				4E98039D2282B6F4002DFF90 /* SearchCell.swift in Sources */,
 				4E8E6A572284584C003F569C /* RatingAppCell.swift in Sources */,
 				4E9D91EB2284416600F0D7E5 /* VerticalStackView.swift in Sources */,
+				4E85DD032286FE8800BC2A1F /* AppTodayMultipleCell.swift in Sources */,
 				4E99CCB62286AF90006702DD /* AppFullScreenCell.swift in Sources */,
 				4E98039B2282B50C002DFF90 /* AppSearchVC.swift in Sources */,
 				4E6752682282CCC500DB6A70 /* Services.swift in Sources */,
+				4E85DD052287055F00BC2A1F /* BaseTodayItemCell.swift in Sources */,
 				4E64E2EA22840E26003C7A85 /* SnappingHorizentalVC.swift in Sources */,
 				4E887A862282FC86008B4E55 /* AppHeaderCell.swift in Sources */,
 				4E765F2C228421C50025BED6 /* AppDetailVC.swift in Sources */,
 				4E8E6A4B22844F34003F569C /* AppPreviewCell.swift in Sources */,
+				4E6BB585228711AE00168456 /* AppTodayMultiVC.swift in Sources */,
 				4E9803842282B068002DFF90 /* AppDelegate.swift in Sources */,
 				4E6752652282C70F00DB6A70 /* AppResultModel.swift in Sources */,
 				4EAEF6A022846BC500FCF918 /* RatingModel.swift in Sources */,
 				4E9D91E92284370400F0D7E5 /* AppDetailCell.swift in Sources */,
 				4E8E6A5522845806003F569C /* RatingAppVC.swift in Sources */,
+				4E6BB587228711F100168456 /* AppTodayMultiCell.swift in Sources */,
 				4E8E6A532284572D003F569C /* AppRatingCell.swift in Sources */,
 				4E887A8A2282FF55008B4E55 /* AppHeaderHorizentalCell.swift in Sources */,
 				4E887A8C22830528008B4E55 /* AppGroupModel.swift in Sources */,

@@ -32,7 +32,9 @@ class AppFullScreenVC: UITableViewController {
            
            
           let  cellHeader =  AppFullScreenHeaderCell()
-        cellHeader.mainImageCell.items = item
+        cellHeader.mainImageCell.todayItem = item
+            cellHeader.mainImageCell.layer.cornerRadius = 0
+           
             cellHeader.closeButton.addTarget(self, action: #selector(handleDismiss), for: .touchUpInside)
             return cellHeader
             
@@ -46,7 +48,7 @@ class AppFullScreenVC: UITableViewController {
     
     override func tableView(_ tableView: UITableView, heightForRowAt indexPath: IndexPath) -> CGFloat {
         if indexPath.row == 0 {
-            return 450
+            return TodayVC.cellSize
         }
         return super.tableView(tableView, heightForRowAt: indexPath)
     }
@@ -57,6 +59,10 @@ class AppFullScreenVC: UITableViewController {
         tableView.tableFooterView = UIView()
         tableView.allowsSelection = false
         tableView.separatorStyle = .none
+        tableView.contentInsetAdjustmentBehavior = .never
+        
+        let height = UIApplication.shared.statusBarFrame.height
+        tableView.contentInset = .init(top: 0, left: 0, bottom: height, right: 0)
     }
     
     @objc func handleDismiss(sender: UIButton)  {

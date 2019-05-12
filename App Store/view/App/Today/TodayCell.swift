@@ -8,16 +8,16 @@
 
 import UIKit
 
-class TodayCell: BaseCell {
+class TodayCell: BaseTodayItemCell {
     
-    var items:TodayItem?  {
+   override var todayItem:TodayItem! {
         didSet{
-        guard let  item = items else { return  }
+        guard let  item = todayItem else { return  }
             self.categoryLabel.text = item.category
             self.titleLabel.text = item.title
             self.centerImage.image =  item.image
             self.imageContainerView.backgroundColor = item.backgroundColor
-            
+            backgroundColor = item.backgroundColor
         }
     }
     
@@ -32,6 +32,7 @@ class TodayCell: BaseCell {
         return im
     } ()
     var imageContainerView = UIView()
+    var topConstraint:NSLayoutConstraint!
     
     
     override func setupViews() {
@@ -47,7 +48,9 @@ class TodayCell: BaseCell {
             ], spacing: 8)
         addSubview(stackView)
         
-        stackView.fillSuperview(padding: .init(top: 24, left: 24, bottom: 24, right: 24))
+        stackView.anchor(top: nil, leading: leadingAnchor, bottom: bottomAnchor, trailing: trailingAnchor,padding: .init(top: 24, left: 24, bottom: 24, right: 24))
+        topConstraint = stackView.topAnchor.constraint(equalTo: topAnchor, constant: 24)
+        topConstraint.isActive = true
 //        stackView.anchor(top: nil, leading: leadingAnchor, bottom: bottomAnchor, trailing: trailingAnchor, padding: .init(top: 0, left: 24, bottom: 24, right: 24))
 //        centerImage.centerInSuperview(size: .init(width: 200, height: 200))
     }

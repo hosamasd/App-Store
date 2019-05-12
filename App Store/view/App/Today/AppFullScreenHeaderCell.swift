@@ -35,7 +35,7 @@ class AppFullScreenHeaderCell: UITableViewCell {
         addSubview(closeButton)
         
     mainImageCell.fillSuperview()
-        closeButton.anchor(top: topAnchor, leading: nil, bottom: nil, trailing: trailingAnchor,padding: .init(top: 8, left: 0, bottom: 0, right: 8),size: .init(width: 80, height: 40))
+        closeButton.anchor(top: topAnchor, leading: nil, bottom: nil, trailing: trailingAnchor,padding: .init(top: 44, left: 0, bottom: 0, right: 8),size: .init(width: 80, height: 40))
     }
     
    @objc func handleDimiss()  {
