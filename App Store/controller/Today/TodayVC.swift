@@ -21,10 +21,8 @@ class TodayVC: BaseListController {
     }()
     var items = [TodayItem]()
     var appFullVC:AppFullScreenVC!
-    var topCons:NSLayoutConstraint?
-    var leadingCons:NSLayoutConstraint?
-    var widthCons:NSLayoutConstraint?
-    var heightCons:NSLayoutConstraint?
+    var anchorConstraints:AnchoredConstraints?
+    
     var startingFrame: CGRect?
     
     override func viewDidLoad() {
@@ -85,7 +83,7 @@ class TodayVC: BaseListController {
         }
     }
     
-     override func collectionView(_ collectionView: UICollectionView, didSelectItemAt indexPath: IndexPath) {
+    override func collectionView(_ collectionView: UICollectionView, didSelectItemAt indexPath: IndexPath) {
         
         switch items[indexPath.item].cellType {
         case .multi:
@@ -136,7 +134,7 @@ class TodayVC: BaseListController {
             
             self.handleRemoveView()
         }
-          appFullVC.view.layer.cornerRadius = 16
+        appFullVC.view.layer.cornerRadius = 16
         self.appFullVC = appFullVC
     }
     
@@ -155,26 +153,21 @@ class TodayVC: BaseListController {
         guard let startFrame = cell.superview?.convert(cell.frame, to: nil) else { return  }
         self.startingFrame = startFrame
         
-        fullScreenApp.translatesAutoresizingMaskIntoConstraints = false
-        
-        topCons = fullScreenApp.topAnchor.constraint(equalTo: view.topAnchor, constant: startFrame.origin.y)
-        leadingCons = fullScreenApp.leadingAnchor.constraint(equalTo: view.leadingAnchor, constant: startFrame.origin.x)
-        widthCons = fullScreenApp.widthAnchor.constraint(equalToConstant: startFrame.width)
-        heightCons = fullScreenApp.heightAnchor.constraint(equalToConstant: startFrame.height)
-        
-        [topCons, leadingCons, heightCons, widthCons].forEach({$0?.isActive = true})
+        self.anchorConstraints = fullScreenApp.anchor(top: view.topAnchor, leading: view.leadingAnchor, bottom: nil, trailing: nil,padding: .init(top: startFrame.origin.y, left: startFrame.origin.x, bottom: 0, right: 0),size: .init(width: startFrame.width, height: startFrame.height))
         
         self.view.layoutIfNeeded()
     }
+    
+    
     
     func beginAnimationAppFullScreen()  {
         
         UIView.animate(withDuration: 0.7, delay: 0, usingSpringWithDamping: 0.7, initialSpringVelocity: 0.7, options: .curveEaseInOut, animations: {
             
-            self.topCons?.constant = 0
-            self.leadingCons?.constant = 0
-            self.widthCons?.constant = self.view.frame.width
-            self.heightCons?.constant = self.view.frame.height
+            self.anchorConstraints?.top?.constant = 0
+            self.anchorConstraints?.leading?.constant = 0
+            self.anchorConstraints?.width?.constant = self.view.frame.width
+            self.anchorConstraints?.height?.constant = self.view.frame.height
             
             self.view.layoutIfNeeded() // start animation
             self.tabBarController?.tabBar.transform = CGAffineTransform(translationX: 0, y: 100)
@@ -186,12 +179,12 @@ class TodayVC: BaseListController {
     }
     
     func showSingleAppFullScreen(indexPath:IndexPath)  {
-       //setup VC
+        //setup VC
         setupSingleAppFullScreen(indexPath)
-       //position of vc
+        //position of vc
         setupAppFullScreenPosition(indexPath)
         //animate it
-       beginAnimationAppFullScreen()
+        beginAnimationAppFullScreen()
     }
     
     func fetchData()  {
@@ -234,10 +227,11 @@ class TodayVC: BaseListController {
             self.appFullVC.tableView.contentOffset = .zero
             
             guard let startingFrame = self.startingFrame else{return}
-            self.topCons?.constant = startingFrame.origin.y
-            self.leadingCons?.constant = startingFrame.origin.x
-            self.widthCons?.constant = startingFrame.width
-            self.heightCons?.constant = startingFrame.height
+            self.anchorConstraints?.top?.constant = startingFrame.origin.y
+            self.anchorConstraints?.leading?.constant = startingFrame.origin.x
+            self.anchorConstraints?.width?.constant = startingFrame.width
+            self.anchorConstraints?.height?.constant = startingFrame.height
+            
             
             self.view.layoutIfNeeded() // start animation
             self.tabBarController?.tabBar.transform = .identity
