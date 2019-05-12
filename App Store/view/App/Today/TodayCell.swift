@@ -18,7 +18,6 @@ class TodayCell: BaseTodayItemCell {
             self.centerImage.image =  item.image
             self.imageContainerView.backgroundColor = item.backgroundColor
             backgroundColor = item.backgroundColor
-            self.backgroundView?.backgroundColor = item.backgroundColor
         }
     }
     
