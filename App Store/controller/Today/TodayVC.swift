@@ -76,14 +76,16 @@ class TodayVC: BaseListController {
         
         while superview != nil {
             if let cell = superview as? AppTodayMultipleCell {
+                
                 guard let index = self.collectionView.indexPath(for: cell) else {return}
                 
             let fullController = AppTodayMultiVC(mode: .fullScreen)
             fullController.appResult = self.items[index.item].apps
-            present( fullController, animated: true, completion: nil)
+            present(BackEnabledNavigationController(rootViewController: fullController), animated: true, completion: nil)
             
-            superview = superview?.superview
+            
         }
+            superview = superview?.superview
         }
         
         
@@ -171,7 +173,7 @@ class TodayVC: BaseListController {
     
     fileprivate func setupCollectionViews() {
         navigationController?.isNavigationBarHidden = true
-        collectionView.backgroundColor = .lightGray
+        collectionView.backgroundColor = .white
         collectionView.register(TodayCell.self, forCellWithReuseIdentifier: TodayItem.CellType.single.rawValue)
         collectionView.register(AppTodayMultipleCell.self, forCellWithReuseIdentifier: TodayItem.CellType.multi.rawValue)
     }
@@ -205,6 +207,8 @@ class TodayVC: BaseListController {
                 TodayItem.init(category: "the daily list", title: grocessingGrroup?.feed.title ?? "", image: #imageLiteral(resourceName: "garden"), description: "", backgroundColor: .white, apps: grocessingGrroup?.feed.results ?? [],cellType: .multi),
                 TodayItem.init(category: "the daily list", title: appsGrroup?.feed.title ?? "", image: #imageLiteral(resourceName: "garden"), description: "", backgroundColor: .white, apps: appsGrroup?.feed.results ?? [],cellType: .multi),
                 TodayItem.init(category: "LIFE HACK", title: "Utilizing your Time", image: #imageLiteral(resourceName: "garden"), description: "All the tools and apps you need to intelligently organize your life the right way.", backgroundColor: .white, apps: [],cellType: .single),
+                TodayItem.init(category: "MULTIPLE CELL", title: "Test-Drive These CarPlay Apps", image: #imageLiteral(resourceName: "holiday"), description: "", backgroundColor: #colorLiteral(red: 0.9925484061, green: 0.9600889087, blue: 0.7310721278, alpha: 1), apps: [], cellType: .single),
+
             ]
             
             self.collectionView.reloadData()

@@ -18,6 +18,7 @@ class TodayCell: BaseTodayItemCell {
             self.centerImage.image =  item.image
             self.imageContainerView.backgroundColor = item.backgroundColor
             backgroundColor = item.backgroundColor
+            self.backgroundView?.backgroundColor = item.backgroundColor
         }
     }
     
@@ -27,6 +28,7 @@ class TodayCell: BaseTodayItemCell {
     
     let centerImage:UIImageView = {
         let im = UIImageView(image: #imageLiteral(resourceName: "garden"))
+        im.clipsToBounds = true
         return im
     } ()
     var imageContainerView = UIView()

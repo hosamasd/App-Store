@@ -33,7 +33,7 @@ class AppFullScreenVC: UITableViewController {
             let  cellHeader =  AppFullScreenHeaderCell()
             cellHeader.mainImageCell.todayItem = item
             cellHeader.mainImageCell.layer.cornerRadius = 0
-            
+            cellHeader.clipsToBounds = true
             cellHeader.closeButton.addTarget(self, action: #selector(handleDismiss), for: .touchUpInside)
             return cellHeader
         }

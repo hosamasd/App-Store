@@ -9,6 +9,7 @@
 import UIKit
 
 class BaseTodayItemCell: BaseCell {
-    var todayItem:TodayItem! 
+    var todayItem:TodayItem!
+   
     
 }
