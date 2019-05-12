@@ -19,6 +19,8 @@ class PreviewScreenShotVC: SnappingHorizentalVC {
        setupCollectionView()
     }
     
+     //MARK:-UICollectionView methods
+    
     override func collectionView(_ collectionView: UICollectionView, numberOfItemsInSection section: Int) -> Int {
         return appsArray?.screenshotUrls.count ?? 0
     }
@@ -31,13 +33,14 @@ class PreviewScreenShotVC: SnappingHorizentalVC {
         return cell
     }
     
+     //MARK: -user methods
+    
     func collectionView(_ collectionView: UICollectionView, layout collectionViewLayout: UICollectionViewLayout, sizeForItemAt indexPath: IndexPath) -> CGSize {
         return .init(width: 250, height: view.frame.height)
     }
     
     fileprivate func setupCollectionView() {
       
-        
          collectionView.backgroundColor = .white
         collectionView.register(PreviewsScreenSHotCell.self, forCellWithReuseIdentifier: cellID)
        

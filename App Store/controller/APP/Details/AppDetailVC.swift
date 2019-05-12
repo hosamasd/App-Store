@@ -8,18 +8,20 @@
 
 import UIKit
 import SDWebImage
+
+//depenedency injection constructor when this cell used in different way to present
 class AppDetailVC: BaseListController {
     
     let cellID = "cellID"
-     let cellPrevID = "cellPrevID"
+    let cellPrevID = "cellPrevID"
     let cellRating = "cellRating"
     
     var appResult:Result?
     var ratings:RatingModel?
     
-     //dependency
+    //dependency
     fileprivate let appId:String
-    //depenedency injection constructor when this cell used in different way to present
+    
     init(appId:String) {
         self.appId = appId
         super.init()
@@ -28,8 +30,8 @@ class AppDetailVC: BaseListController {
     required init?(coder aDecoder: NSCoder) {
         fatalError("init(coder:) has not been implemented")
     }
-   
-  
+    
+    
     override func viewDidLoad() {
         super.viewDidLoad()
         
@@ -37,29 +39,7 @@ class AppDetailVC: BaseListController {
         fetchData()
     }
     
-    func fetchData()  {
-        let url = "https://itunes.apple.com/lookup?id=\(appId)"
-        Services.shared.fetchGenericJSONData(urlString: url) { (res:AppResultModel? , err) in
-            if err != nil {
-                print("error        ",err)
-            }
-            self.appResult =  res?.results.first
-            
-            
-            DispatchQueue.main.async {
-                self.collectionView.reloadData()
-            }
-        }
-        
-        let reviewsUrl = "https://itunes.apple.com/rss/customerreviews/page=1/id=\(appId)/sortby=mostrecent/json?l=en&cc=us"
-        Services.shared.fetchGenericJSONData(urlString: reviewsUrl) { (rate:RatingModel?, err) in
-            self.ratings = rate
-            
-            DispatchQueue.main.async {
-                self.collectionView.reloadData()
-            }
-        }
-    }
+    //MARK:-UICollectionView methods
     
     override func collectionView(_ collectionView: UICollectionView, numberOfItemsInSection section: Int) -> Int {
         return 3
@@ -108,18 +88,41 @@ class AppDetailVC: BaseListController {
         }
         
         return .init(width: view.frame.width, height: height)
-     
+    }
+    
+    //MARK: -user methods
+    
+    func fetchData()  {
+        let url = "https://itunes.apple.com/lookup?id=\(appId)"
+        Services.shared.fetchGenericJSONData(urlString: url) { (res:AppResultModel? , err) in
+            if err != nil {
+                print("error        ",err)
+            }
+            self.appResult =  res?.results.first
+            
+            DispatchQueue.main.async {
+                self.collectionView.reloadData()
+            }
+        }
         
+        let reviewsUrl = "https://itunes.apple.com/rss/customerreviews/page=1/id=\(appId)/sortby=mostrecent/json?l=en&cc=us"
+        Services.shared.fetchGenericJSONData(urlString: reviewsUrl) { (rate:RatingModel?, err) in
+            self.ratings = rate
+            
+            DispatchQueue.main.async {
+                self.collectionView.reloadData()
+            }
+        }
     }
     
     fileprivate func setupCollectionView() {
-      navigationItem.largeTitleDisplayMode = .never
-      
+        navigationItem.largeTitleDisplayMode = .never
+        
         collectionView.backgroundColor = .white
         
         collectionView.register(AppDetailCell.self, forCellWithReuseIdentifier: cellID)
-          collectionView.register(AppPreviewCell.self, forCellWithReuseIdentifier: cellPrevID)
-         collectionView.register(AppRatingCell.self, forCellWithReuseIdentifier: cellRating)
-//        collectionView.contentInset = .init(top: 0, left: 16, bottom: 0, right: 16)
+        collectionView.register(AppPreviewCell.self, forCellWithReuseIdentifier: cellPrevID)
+        collectionView.register(AppRatingCell.self, forCellWithReuseIdentifier: cellRating)
+        //        collectionView.contentInset = .init(top: 0, left: 16, bottom: 0, right: 16)
     }
 }

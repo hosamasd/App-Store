@@ -8,6 +8,9 @@
 
 import UIKit
 
+
+//dependency injection in this VC also
+
 class AppTodayMultiVC: BaseListController {
     
     fileprivate let cellId = "cellId"
@@ -20,18 +23,41 @@ class AppTodayMultiVC: BaseListController {
         return bt
     }()
     
-    override func viewDidLoad() {
-        super.viewDidLoad()
-        setupCollectionViews()
-        setupCloseButton()
-    }
-    override func viewWillAppear(_ animated: Bool) {
-        super.viewWillAppear(animated)
-        fetchData()
-       
+    //dependency
+   fileprivate let mode:Mode
+    
+    enum Mode {
+        case small,fullScreen
     }
     
+     init(mode:Mode) {
+        self.mode = mode
+        super.init()
+    }
+    
+    required init?(coder aDecoder: NSCoder) {
+        fatalError("init(coder:) has not been implemented")
+    }
+    
+    override func viewDidLoad() {
+        super.viewDidLoad()
+        
+        if mode == .fullScreen {
+            setupCloseButton()
+            self.navigationController?.isNavigationBarHidden = true
+        }else {
+             collectionView.isScrollEnabled = false
+        }
+         setupCollectionViews()
+     }
+    
+    override var prefersStatusBarHidden: Bool{ return true }
+  
+    
     override func collectionView(_ collectionView: UICollectionView, numberOfItemsInSection section: Int) -> Int {
+        if mode == .fullScreen {
+            return appResult.count
+        }
         return  min(4, appResult.count)
        
     }
@@ -44,27 +70,33 @@ class AppTodayMultiVC: BaseListController {
         return cell
     }
     
-    func collectionView(_ collectionView: UICollectionView, layout collectionViewLayout: UICollectionViewLayout, sizeForItemAt indexPath: IndexPath) -> CGSize {
-         let height: CGFloat = (view.frame.height - 3 * spacing) / 4
-        return .init(width: view.frame.width, height: height)
+    func collectionView(_ collectionView: UICollectionView, layout collectionViewLayout: UICollectionViewLayout, insetForSectionAt section: Int) -> UIEdgeInsets {
+        if mode == .fullScreen {
+            return .init(top: 12, left: 24, bottom: 12, right: 24)
+        }
+        return .zero
     }
     
+    func collectionView(_ collectionView: UICollectionView, layout collectionViewLayout: UICollectionViewLayout, sizeForItemAt indexPath: IndexPath) -> CGSize {
+//         let height: CGFloat = (view.frame.height - 3 * spacing) / 4
+        let height:CGFloat = 68
+        if mode == .fullScreen {
+            return CGSize(width: view.frame.width - 48, height: height)
+        }
+         return CGSize(width: view.frame.width, height: height)
+    }
+    
+    override func collectionView(_ collectionView: UICollectionView, didSelectItemAt indexPath: IndexPath) {
+        let appId = self.appResult[indexPath.item].id
+       let appDetails = AppDetailVC(appId: appId)
+        navigationController?.pushViewController(appDetails, animated: true)
+    }
     func collectionView(_ collectionView: UICollectionView, layout collectionViewLayout: UICollectionViewLayout, minimumLineSpacingForSectionAt section: Int) -> CGFloat {
         return spacing
     }
    
-    fileprivate func fetchData() {
-        Services.shared.fetchFreeApps { (app, err) in
-            
-            self.appResult = app?.feed.results ??  []
-          
-        }
-        DispatchQueue.main.async {
-            self.collectionView.reloadData()
-        }
-    }
-    
-    
+    //MARK: -user methods
+   
     func setupCloseButton()  {
         view.addSubview(closeButton)
         
@@ -73,11 +105,10 @@ class AppTodayMultiVC: BaseListController {
     
     fileprivate func setupCollectionViews() {
         collectionView.backgroundColor = .white
-        collectionView.isScrollEnabled = false
-
         collectionView.register(AppTodayMultiCell.self, forCellWithReuseIdentifier: cellId)
-        
     }
+    
+    //TODO: -handle methods
     
     @objc func handleDimiss()  {
         dismiss(animated: true)

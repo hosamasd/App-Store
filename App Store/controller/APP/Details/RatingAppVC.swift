@@ -20,6 +20,8 @@ class RatingAppVC: SnappingHorizentalVC {
        setupCollectionView()
     }
     
+     //MARK:-UICollectionView methods
+    
     override func collectionView(_ collectionView: UICollectionView, numberOfItemsInSection section: Int) -> Int {
         return 5
     }
@@ -34,6 +36,8 @@ class RatingAppVC: SnappingHorizentalVC {
     func collectionView(_ collectionView: UICollectionView, layout collectionViewLayout: UICollectionViewLayout, sizeForItemAt indexPath: IndexPath) -> CGSize {
         return .init(width: view.frame.width - 48, height: view.frame.height)
     }
+    
+     //MARK: -user methods
     
     fileprivate func setupCollectionView() {
         collectionView.backgroundColor = .white

@@ -119,7 +119,7 @@ extension UIColor{
 
 extension UILabel {
     convenience init(string:String, font:UIFont,numberOfLines:Int = 1){
-    self.init(frame: .zero)
+        self.init(frame: .zero)
         self.text = string
         self.font = font
         self.numberOfLines = numberOfLines
@@ -132,7 +132,7 @@ extension UIImageView {
         self.layer.cornerRadius = cornerRdius
         self.contentMode = .scaleAspectFill
         self.clipsToBounds = true
-       
+        
     }
 }
 

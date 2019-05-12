@@ -10,15 +10,8 @@ import UIKit
 
 class TodayVC: BaseListController {
     
+    static let cellSize: CGFloat = 500
    
-//    let items = [
-    
-//        TodayItem.init(category: "HOLIDAYS", title: "Travel on a Budget", image: #imageLiteral(resourceName: "holiday"), description: "Find out all you need to know on how to travel without packing everything!", backgroundColor: #colorLiteral(red: 0.9838578105, green: 0.9588007331, blue: 0.7274674177, alpha: 1),cellType: .single),
-//        TodayItem.init(category: "the daily list", title: "test drive these things car play apps", image: #imageLiteral(resourceName: "garden"), description: "", backgroundColor: .white,cellType: .multi),
-//    ]
-    
-    var items = [TodayItem]()
-    
     let activityIndicatorView: UIActivityIndicatorView = {
         let aiv = UIActivityIndicatorView(style: .whiteLarge)
         aiv.color = .darkGray
@@ -26,21 +19,166 @@ class TodayVC: BaseListController {
         aiv.hidesWhenStopped = true
         return aiv
     }()
-     var appFullVC:AppFullScreenVC!
+    var items = [TodayItem]()
+    var appFullVC:AppFullScreenVC!
     var topCons:NSLayoutConstraint?
     var leadingCons:NSLayoutConstraint?
     var widthCons:NSLayoutConstraint?
     var heightCons:NSLayoutConstraint?
     var startingFrame: CGRect?
-    static let cellSize: CGFloat = 500
     
-    override func viewDidLoad() {
+     override func viewDidLoad() {
         super.viewDidLoad()
-        view.addSubview(activityIndicatorView)
-        activityIndicatorView.centerInSuperview()
+        setupActivityIndicator()
         
         setupCollectionViews()
         fetchData()
+    }
+    
+    override func viewWillAppear(_ animated: Bool) {
+        super.viewWillAppear(animated)
+        //solve problem of bad tabbar place and put it in correct place
+        tabBarController?.tabBar.superview?.setNeedsLayout()
+    }
+    
+    
+    
+    //MARK:-UICollectionView methods
+    
+    override func collectionView(_ collectionView: UICollectionView, numberOfItemsInSection section: Int) -> Int {
+        return items.count
+    }
+    
+    override func collectionView(_ collectionView: UICollectionView, cellForItemAt indexPath: IndexPath) -> UICollectionViewCell {
+        let index = items[indexPath.item]
+        
+        let cellType = items[indexPath.item].cellType.rawValue
+        
+        let cell = collectionView.dequeueReusableCell(withReuseIdentifier: cellType, for: indexPath) as! BaseTodayItemCell
+        
+        cell.todayItem = items[indexPath.item]
+        
+        (cell as? AppTodayMultipleCell)?.multipleAppsController.collectionView.addGestureRecognizer(UITapGestureRecognizer(target: self, action: #selector(handleMaultiAppTapped)))
+        return cell
+    }
+    
+    //    fileprivate func makeConstraintSetup(top:NSLayoutConstraint,leading:NSLayoutConstraint,width:NSLayoutConstraint,height:NSLayoutConstraint,_ redView: UIView, _ startFrame: CGRect) {
+    //        topCons = redView.topAnchor.constraint(equalTo: view.topAnchor, constant: startFrame.origin.y)
+    //        leadingCons = redView.leadingAnchor.constraint(equalTo: view.leadingAnchor, constant: startFrame.origin.x)
+    //        widthCons = redView.widthAnchor.constraint(equalToConstant: startFrame.width)
+    //        heightCons = redView.heightAnchor.constraint(equalToConstant: startFrame.height)
+    //    }
+    
+    @objc func handleMaultiAppTapped(gesture:UITapGestureRecognizer){
+        let collection = gesture.view
+        
+        var superview = collection?.superview
+        
+        while superview != nil {
+            if let cell = superview as? AppTodayMultipleCell {
+                guard let index = self.collectionView.indexPath(for: cell) else {return}
+                
+            let fullController = AppTodayMultiVC(mode: .fullScreen)
+            fullController.appResult = self.items[index.item].apps
+            present( fullController, animated: true, completion: nil)
+            
+            superview = superview?.superview
+        }
+        }
+        
+        
+       
+        
+    }
+    
+    override func collectionView(_ collectionView: UICollectionView, didSelectItemAt indexPath: IndexPath) {
+        
+        if items[indexPath.item].cellType == .multi {
+            let fullController = AppTodayMultiVC(mode: .fullScreen)
+            fullController.appResult = items[indexPath.item].apps
+            present(BackEnabledNavigationController(rootViewController: fullController), animated: true, completion: nil)
+            return
+        }
+        
+        let appFullVC = AppFullScreenVC()
+        appFullVC.item = self.items[indexPath.row]
+        
+        appFullVC.handleCloseClosure = {
+            
+            self.handleRemoveView()
+        }
+        let redView = appFullVC.view!
+        
+        addChild(appFullVC)
+        self.appFullVC = appFullVC
+        redView.layer.cornerRadius = 16
+        
+        view.addSubview(redView)
+        
+        self.collectionView.isUserInteractionEnabled = false
+        
+        guard let cell = collectionView.cellForItem(at: indexPath) else { return  }
+        
+        //absolute cord of cell
+        guard let startFrame = cell.superview?.convert(cell.frame, to: nil) else { return  }
+        self.startingFrame = startFrame
+        
+        redView.translatesAutoresizingMaskIntoConstraints = false
+        
+        topCons = redView.topAnchor.constraint(equalTo: view.topAnchor, constant: startFrame.origin.y)
+        leadingCons = redView.leadingAnchor.constraint(equalTo: view.leadingAnchor, constant: startFrame.origin.x)
+        widthCons = redView.widthAnchor.constraint(equalToConstant: startFrame.width)
+        heightCons = redView.heightAnchor.constraint(equalToConstant: startFrame.height)
+        
+        [topCons, leadingCons, heightCons, widthCons].forEach({$0?.isActive = true})
+        
+        self.view.layoutIfNeeded()
+        
+        UIView.animate(withDuration: 0.7, delay: 0, usingSpringWithDamping: 0.7, initialSpringVelocity: 0.7, options: .curveEaseInOut, animations: {
+            
+            
+            
+            self.topCons?.constant = 0
+            self.leadingCons?.constant = 0
+            self.widthCons?.constant = self.view.frame.width
+            self.heightCons?.constant = self.view.frame.height
+            
+            self.view.layoutIfNeeded() // start animation
+            self.tabBarController?.tabBar.transform = CGAffineTransform(translationX: 0, y: 100)
+            
+            guard let cel = self.appFullVC.tableView.cellForRow(at: [0,0]) as? AppFullScreenHeaderCell else {return}
+            cel.mainImageCell.topConstraint.constant = 48
+            cel.layoutIfNeeded()
+        }, completion: nil)
+    }
+    
+    
+    
+    
+    func collectionView(_ collectionView: UICollectionView, layout collectionViewLayout: UICollectionViewLayout, sizeForItemAt indexPath: IndexPath) -> CGSize {
+        return .init(width: view.frame.width - 64, height: TodayVC.cellSize)
+    }
+    
+    func collectionView(_ collectionView: UICollectionView, layout collectionViewLayout: UICollectionViewLayout, minimumLineSpacingForSectionAt section: Int) -> CGFloat {
+        return 32
+    }
+    
+    func collectionView(_ collectionView: UICollectionView, layout collectionViewLayout: UICollectionViewLayout, insetForSectionAt section: Int) -> UIEdgeInsets {
+        return .init(top: 32, left: 0, bottom: 32, right: 0)
+    }
+    
+    //ARK: -user methods
+    
+    fileprivate func setupCollectionViews() {
+        navigationController?.isNavigationBarHidden = true
+        collectionView.backgroundColor = .lightGray
+        collectionView.register(TodayCell.self, forCellWithReuseIdentifier: TodayItem.CellType.single.rawValue)
+        collectionView.register(AppTodayMultipleCell.self, forCellWithReuseIdentifier: TodayItem.CellType.multi.rawValue)
+    }
+    
+    fileprivate func setupActivityIndicator() {
+        view.addSubview(activityIndicatorView)
+        activityIndicatorView.centerInSuperview()
     }
     
     func fetchData()  {
@@ -71,115 +209,6 @@ class TodayVC: BaseListController {
             
             self.collectionView.reloadData()
         }
-    }
-    
-    //MARK:-UICollectionView METHODS
-    
-    override func collectionView(_ collectionView: UICollectionView, numberOfItemsInSection section: Int) -> Int {
-        return items.count
-    }
-    
-    override func collectionView(_ collectionView: UICollectionView, cellForItemAt indexPath: IndexPath) -> UICollectionViewCell {
-        
-        let cellType = items[indexPath.item].cellType.rawValue
-        
-        let cell = collectionView.dequeueReusableCell(withReuseIdentifier: cellType, for: indexPath) as! BaseTodayItemCell
-       
-        cell.todayItem = items[indexPath.item]
-       
-        return cell
-    }
-    
-//    fileprivate func makeConstraintSetup(top:NSLayoutConstraint,leading:NSLayoutConstraint,width:NSLayoutConstraint,height:NSLayoutConstraint,_ redView: UIView, _ startFrame: CGRect) {
-//        topCons = redView.topAnchor.constraint(equalTo: view.topAnchor, constant: startFrame.origin.y)
-//        leadingCons = redView.leadingAnchor.constraint(equalTo: view.leadingAnchor, constant: startFrame.origin.x)
-//        widthCons = redView.widthAnchor.constraint(equalToConstant: startFrame.width)
-//        heightCons = redView.heightAnchor.constraint(equalToConstant: startFrame.height)
-//    }
-    
-    override func collectionView(_ collectionView: UICollectionView, didSelectItemAt indexPath: IndexPath) {
-        
-        if items[indexPath.item].cellType == .multi {
-            let fullController = AppTodayMultiVC()
-            fullController.appResult = items[indexPath.item].apps
-            present(fullController, animated: true, completion: nil)
-            return
-        }
-        
-        let appFullVC = AppFullScreenVC()
-         appFullVC.item = self.items[indexPath.row]
-        
-        appFullVC.handleCloseClosure = {
-           
-            self.handleRemoveView()
-        }
-        let redView = appFullVC.view!
-        
-        addChild(appFullVC)
-        self.appFullVC = appFullVC
-        redView.layer.cornerRadius = 16
-        
-        view.addSubview(redView)
-        
-         self.collectionView.isUserInteractionEnabled = false
-        
-        guard let cell = collectionView.cellForItem(at: indexPath) else { return  }
-        
-        //absolute cord of cell
-        guard let startFrame = cell.superview?.convert(cell.frame, to: nil) else { return  }
-        self.startingFrame = startFrame
-        
-        redView.translatesAutoresizingMaskIntoConstraints = false
-        
-        topCons = redView.topAnchor.constraint(equalTo: view.topAnchor, constant: startFrame.origin.y)
-        leadingCons = redView.leadingAnchor.constraint(equalTo: view.leadingAnchor, constant: startFrame.origin.x)
-        widthCons = redView.widthAnchor.constraint(equalToConstant: startFrame.width)
-        heightCons = redView.heightAnchor.constraint(equalToConstant: startFrame.height)
-        
-        [topCons, leadingCons, heightCons, widthCons].forEach({$0?.isActive = true})
-        
-        self.view.layoutIfNeeded()
-        
-        UIView.animate(withDuration: 0.7, delay: 0, usingSpringWithDamping: 0.7, initialSpringVelocity: 0.7, options: .curveEaseInOut, animations: {
-           
-            
-            
-            self.topCons?.constant = 0
-            self.leadingCons?.constant = 0
-            self.widthCons?.constant = self.view.frame.width
-            self.heightCons?.constant = self.view.frame.height
-            
-            self.view.layoutIfNeeded() // start animation
-            self.tabBarController?.tabBar.transform = CGAffineTransform(translationX: 0, y: 100)
-            
-            guard let cel = self.appFullVC.tableView.cellForRow(at: [0,0]) as? AppFullScreenHeaderCell else {return}
-            cel.mainImageCell.topConstraint.constant = 48
-            cel.layoutIfNeeded()
-        }, completion: nil)
-    }
-    
-    
-   
-    
-    func collectionView(_ collectionView: UICollectionView, layout collectionViewLayout: UICollectionViewLayout, sizeForItemAt indexPath: IndexPath) -> CGSize {
-        return .init(width: view.frame.width - 64, height: TodayVC.cellSize)
-    }
-    
-    func collectionView(_ collectionView: UICollectionView, layout collectionViewLayout: UICollectionViewLayout, minimumLineSpacingForSectionAt section: Int) -> CGFloat {
-        return 32
-    }
-    
-    func collectionView(_ collectionView: UICollectionView, layout collectionViewLayout: UICollectionViewLayout, insetForSectionAt section: Int) -> UIEdgeInsets {
-        return .init(top: 32, left: 0, bottom: 32, right: 0)
-    }
-    
-    //ARK: -user methods
-    
-    fileprivate func setupCollectionViews() {
-        navigationController?.isNavigationBarHidden = true
-        collectionView.backgroundColor = .lightGray
-        collectionView.register(TodayCell.self, forCellWithReuseIdentifier: TodayItem.CellType.single.rawValue)
-       collectionView.register(AppTodayMultipleCell.self, forCellWithReuseIdentifier: TodayItem.CellType.multi.rawValue)
     }
     
     //TODO: -handle methods

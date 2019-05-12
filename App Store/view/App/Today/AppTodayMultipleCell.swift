@@ -10,11 +10,10 @@ import UIKit
 
 class AppTodayMultipleCell: BaseTodayItemCell {
     
-   override  var todayItem: TodayItem!{
+    override  var todayItem: TodayItem!{
         didSet {
             categoryLabel.text = todayItem.category
             titleLabel.text = todayItem.title
-            
             multipleAppsController.appResult = todayItem.apps
             multipleAppsController.collectionView.reloadData()
         }
@@ -23,14 +22,11 @@ class AppTodayMultipleCell: BaseTodayItemCell {
     let categoryLabel = UILabel(string: "LIFE HACK", font: .boldSystemFont(ofSize: 20))
     let titleLabel = UILabel(string: "Utilizing your Time", font: .boldSystemFont(ofSize: 32), numberOfLines: 2)
     
-    let multipleAppsController = AppTodayMultiVC()
+    let multipleAppsController = AppTodayMultiVC(mode: .small)
     override func setupViews() {
-        
         
         backgroundColor = .white
         layer.cornerRadius = 16
-        
-      
         
         let stackView = VerticalStackView(arrangedSubviews: [
             categoryLabel,

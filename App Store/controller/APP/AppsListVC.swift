@@ -11,11 +11,11 @@ import UIKit
 class AppsListVC: BaseListController {
     
     fileprivate let cellId = "cellId"
-     fileprivate let headerId = "headerId"
+    fileprivate let headerId = "headerId"
     var groups = [AppGroupModel]()
     var groupsSocial = [SocialAModel]()
     
-     
+    
     let activityIndicator:UIActivityIndicatorView = {
         let ac  = UIActivityIndicatorView(style: .whiteLarge)
         ac.color = .black
@@ -33,66 +33,12 @@ class AppsListVC: BaseListController {
     
     override func viewWillAppear(_ animated: Bool) {
         super.viewWillAppear(animated)
-      //  fetchData()
+        //  fetchData()
     }
     
-    func fetchData()  {
-       
-        var group1: AppGroupModel?
-        var group2: AppGroupModel?
-        var group3: AppGroupModel?
-       
-        
-        //to sync data that can be fetched
-        let dispatchGroup = DispatchGroup()
-        
-       
-          dispatchGroup.enter()
-        Services.shared.fetchFreeApps { (apps, err) in
-                 dispatchGroup.leave()
-            
-           group2 = apps
-        }
-        
-        dispatchGroup.enter()
-        
-        Services.shared.fetchAppGroups(urlString: "https://rss.itunes.apple.com/api/v1/us/ios-apps/new-games-we-love/all/25/explicit.json") { (apps, err) in
-            dispatchGroup.leave()
-            
-            group3 = apps
-        }
-        
-        dispatchGroup.enter()
-        Services.shared.fetchTopGrossing { (apps, err) in
-            dispatchGroup.leave()
-            group1 = apps
-        }
-        
-        dispatchGroup.enter()
-        Services.shared.fetchSocialApps { (social, err) in
-            dispatchGroup.leave()
-          
-            self.groupsSocial = social ?? []
-        }
-        
-        dispatchGroup.notify(queue: .main) {
-            
-            self.activityIndicator.stopAnimating()
-            
-            if let group = group3 {
-                self.groups.append(group)
-            }
-            if let group = group1 {
-                self.groups.append(group)
-            }
-            if let group = group2 {
-                self.groups.append(group)
-            }
-           
-          
-            self.collectionView.reloadData()
-        }
-    }
+    
+    
+    //MARK:-UICollectionView methods
     
     override func collectionView(_ collectionView: UICollectionView, numberOfItemsInSection section: Int) -> Int {
         return groups.count
@@ -111,14 +57,12 @@ class AppsListVC: BaseListController {
             print(res.id)
             self?.navigationController?.pushViewController(newVC, animated: true)
         }
-        
-        
         return cell
     }
     
     override func collectionView(_ collectionView: UICollectionView, viewForSupplementaryElementOfKind kind: String, at indexPath: IndexPath) -> UICollectionReusableView {
         let header = collectionView.dequeueReusableSupplementaryView(ofKind: kind, withReuseIdentifier: headerId, for: indexPath) as! AppHeaderCell
-         
+        
         header.horizentalCollectionView.socialAppArray = groupsSocial
         header.horizentalCollectionView.collectionView.reloadData()
         return header
@@ -132,6 +76,57 @@ class AppsListVC: BaseListController {
         return .init(width: view.frame.width, height: 300)
     }
     
+    //MARK: -user methods
+    
+    func fetchData()  {
+        
+        var group1: AppGroupModel?
+        var group2: AppGroupModel?
+        var group3: AppGroupModel?
+        //to sync data that can be fetched
+        let dispatchGroup = DispatchGroup()
+        
+        dispatchGroup.enter()
+        Services.shared.fetchFreeApps { (apps, err) in
+            dispatchGroup.leave()
+            group2 = apps
+        }
+        
+        dispatchGroup.enter()
+        
+        Services.shared.fetchAppGroups { (apps, err) in
+            dispatchGroup.leave()
+            group3 = apps
+        }
+        
+        dispatchGroup.enter()
+        Services.shared.fetchTopGrossing { (apps, err) in
+            dispatchGroup.leave()
+            group1 = apps
+        }
+        
+        dispatchGroup.enter()
+        Services.shared.fetchSocialApps { (social, err) in
+            dispatchGroup.leave()
+            self.groupsSocial = social ?? []
+        }
+        
+        dispatchGroup.notify(queue: .main) {
+            
+            self.activityIndicator.stopAnimating()
+            
+            if let group = group3 {
+                self.groups.append(group)
+            }
+            if let group = group1 {
+                self.groups.append(group)
+            }
+            if let group = group2 {
+                self.groups.append(group)
+            }
+            self.collectionView.reloadData()
+        }
+    }
     
     fileprivate func setupCollectionView() {
         

@@ -12,7 +12,7 @@ class AppFullScreenHeaderCell: UITableViewCell {
     
     let mainImageCell = TodayCell()
     lazy var closeButton:UIButton = {
-       let bt = UIButton()
+        let bt = UIButton()
         bt.setImage(#imageLiteral(resourceName: "close_button").withRenderingMode(.alwaysOriginal), for: .normal)
         bt.addTarget(self, action: #selector(handleDimiss), for: .touchUpInside)
         return bt
@@ -34,11 +34,11 @@ class AppFullScreenHeaderCell: UITableViewCell {
         addSubview(mainImageCell)
         addSubview(closeButton)
         
-    mainImageCell.fillSuperview()
+        mainImageCell.fillSuperview()
         closeButton.anchor(top: topAnchor, leading: nil, bottom: nil, trailing: trailingAnchor,padding: .init(top: 44, left: 0, bottom: 0, right: 8),size: .init(width: 80, height: 40))
     }
     
-   @objc func handleDimiss()  {
-//    handleCloseClosure(self.superview, <#()#>)
+    @objc func handleDimiss()  {
+        //    handleCloseClosure(self.superview, <#()#>)
     }
 }

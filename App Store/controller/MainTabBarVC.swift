@@ -12,14 +12,10 @@ class MainTabBarVC: UITabBarController {
     
     override func viewDidLoad() {
         super.viewDidLoad()
-        //check if login or not
-//        self.delegate = self
-      
-        
         setupViewControllers()
     }
     
-    //MARK: -USER METHODS
+     //MARK: -user methods
     
     fileprivate func setupViewControllers() {
         
@@ -31,12 +27,10 @@ class MainTabBarVC: UITabBarController {
         tabBar.tintColor = .black
         
         viewControllers = [
-             today,
-             apps,
+            today,
+            apps,
             search,
-           
-           
-           ]
+        ]
         
         guard let items = tabBar.items else { return }
         
@@ -44,8 +38,6 @@ class MainTabBarVC: UITabBarController {
             item.imageInsets = UIEdgeInsets(top: 4, left: 0, bottom: -4, right: 0)
         }
     }
-    
-   
     
     fileprivate func templateNavControllerVC(title: String, selectedImage: UIImage, rootViewController: UIViewController )  -> UIViewController {
         let viewController = rootViewController
@@ -58,20 +50,4 @@ class MainTabBarVC: UITabBarController {
         return navController
     }
 }
-//extension MainTabBarVC: UITabBarControllerDelegate {
-//
-//    func tabBarController(_ tabBarController: UITabBarController, shouldSelect viewController: UIViewController) -> Bool {
-//        let index = tabBarController.viewControllers?.index(of: viewController)
-//        if index == 2 {
-//            let photo = PhotoSelectorVC(collectionViewLayout: UICollectionViewFlowLayout())
-//            let nav = UINavigationController(rootViewController: photo)
-//
-//            present(nav, animated: true, completion: nil)
-//
-//            return false
-//        }
-//        return true
-//
-//    }
-//}
 

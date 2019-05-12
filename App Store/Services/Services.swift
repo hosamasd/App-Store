@@ -9,26 +9,27 @@
 import Foundation
 
 class Services {
-   
+    
     static let shared = Services()
     
     func fetchApps(searchText:String,completion: @escaping (AppResultModel?, Error?) ->())  {
-         let mainUrl = "https://itunes.apple.com/search?term=\(searchText)&entity=software"
+        let mainUrl = "https://itunes.apple.com/search?term=\(searchText)&entity=software"
         fetchGenericJSONData(urlString: mainUrl, completion: completion)
-
+        
     }
     
-   func fetchFreeApps(completion: @escaping (AppGroupModel?, Error?) ->())  {
+    func fetchFreeApps(completion: @escaping (AppGroupModel?, Error?) ->())  {
         let url = "https://rss.itunes.apple.com/api/v1/us/ios-apps/top-free/all/25/explicit.json"
-         fetchAppGroups(urlString: url, completion: completion)
+        fetchGenericJSONData(urlString: url, completion: completion)
     }
     func fetchTopGrossing(completion: @escaping (AppGroupModel?, Error?) ->())  {
-         let urls = "https://rss.itunes.apple.com/api/v1/us/ios-apps/top-grossing/all/25/explicit.json"
+        let urls = "https://rss.itunes.apple.com/api/v1/us/ios-apps/top-grossing/all/25/explicit.json"
         
-        fetchAppGroups(urlString: urls, completion: completion)
+        fetchGenericJSONData(urlString: urls, completion: completion)
     }
-
-    func fetchAppGroups(urlString:String ,completion: @escaping (AppGroupModel?, Error?) ->())  {
+    
+    func fetchAppGroups(completion: @escaping (AppGroupModel?, Error?) ->())  {
+        let urlString =  "https://rss.itunes.apple.com/api/v1/us/ios-apps/new-games-we-love/all/25/explicit.json"
         fetchGenericJSONData(urlString: urlString, completion: completion)
     }
     
@@ -39,8 +40,6 @@ class Services {
     }
     
     func fetchGenericJSONData<T: Codable>(urlString:String, completion: @escaping (T?, Error?) -> ())  {
-        
-//        print("type of t is : ",T.self)
         
         guard let url = URL(string: urlString) else { return }
         URLSession.shared.dataTask(with: url) { (data, resp, err) in

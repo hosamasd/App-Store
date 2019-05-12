@@ -34,7 +34,7 @@ class AppListHorizentalVC: SnappingHorizentalVC  {
         if let index = self.appGroups?.feed.results[indexPath.item] {
             handleIndexSelected?(index)
         }
-       
+        
     }
     
     override func collectionView(_ collectionView: UICollectionView, cellForItemAt indexPath: IndexPath) -> UICollectionViewCell {
@@ -42,7 +42,7 @@ class AppListHorizentalVC: SnappingHorizentalVC  {
         let appFeed = appGroups?.feed.results[indexPath.item]
         
         cell.appFeeds = appFeed
-       return cell
+        return cell
     }
     
     func collectionView(_ collectionView: UICollectionView, layout collectionViewLayout: UICollectionViewLayout, sizeForItemAt indexPath: IndexPath) -> CGSize {
@@ -52,10 +52,6 @@ class AppListHorizentalVC: SnappingHorizentalVC  {
         return .init(width: width, height: height )
     }
     
-//    func collectionView(_ collectionView: UICollectionView, layout collectionViewLayout: UICollectionViewLayout, insetForSectionAt section: Int) -> UIEdgeInsets {
-//        return UIEdgeInsets(top: topBottomPadding, left: 16, bottom: topBottomPadding ,right: 16)
-//    }
-    
     func collectionView(_ collectionView: UICollectionView, layout collectionViewLayout: UICollectionViewLayout, minimumLineSpacingForSectionAt section: Int) -> CGFloat {
         return linrSpacing
     }
@@ -64,9 +60,9 @@ class AppListHorizentalVC: SnappingHorizentalVC  {
     
     fileprivate func setupCollectionView() {
         collectionView.backgroundColor = .white
-       
+        
         collectionView.register(AppRowCell.self, forCellWithReuseIdentifier: cellId)
-         collectionView.contentInset = .init(top: 0, left: 16, bottom: 0, right: 16)
+        collectionView.contentInset = .init(top: 0, left: 16, bottom: 0, right: 16)
     }
     
 }
