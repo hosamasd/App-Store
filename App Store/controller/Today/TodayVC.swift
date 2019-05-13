@@ -238,19 +238,36 @@ class TodayVC: BaseListController, UIGestureRecognizerDelegate {
         return true
     }
     
+    var appFullScreenOffset:CGFloat = 0
     
     //TODO: -handle methods
     
     @objc func handleDrag(gesture: UIPanGestureRecognizer){
-        let translatY = gesture.translation(in: appFullVC.view).y
-        
+        if gesture.state == .began {
+            appFullScreenOffset = appFullVC.tableView.contentOffset.y
+        }
        
+        if appFullVC.tableView.contentOffset.y > 0 {
+            return
+        }
+       
+         let translatY = gesture.translation(in: appFullVC.view).y
         if gesture.state == .changed {
-            let scale = 1 - translatY / 1000  // increase 1000 better performance
+            if translatY > 0 {
+                
+                let trueOffset = translatY - appFullScreenOffset
+                
+            var scale = 1 - trueOffset / 1000  // increase 1000 better performance
+                
+                scale = min(1, scale)
+                scale = max(0.5, scale)
             let transform:CGAffineTransform = .init(scaleX: scale, y: scale)
             self.appFullVC.view.transform = transform
+            }
         }else if gesture.state == .ended {
+              if translatY > 0 {
             handleRemoveAppFullVC()
+            }
         }
     }
     
@@ -273,6 +290,7 @@ class TodayVC: BaseListController, UIGestureRecognizerDelegate {
             self.tabBarController?.tabBar.transform = .identity
             
             guard let cel = self.appFullVC.tableView.cellForRow(at: [0,0]) as? AppFullScreenHeaderCell else {return}
+            cel.closeButton.alpha = 0 // to hide when minmize using draging cell
             cel.mainImageCell.topConstraint.constant = 24
             cel.layoutIfNeeded()
         }) { (_) in
