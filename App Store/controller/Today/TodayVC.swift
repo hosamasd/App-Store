@@ -11,7 +11,7 @@ import UIKit
 class TodayVC: BaseListController, UIGestureRecognizerDelegate {
     
     static let cellSize: CGFloat = 500
-    
+     var appFullScreenOffset:CGFloat = 0
     let activityIndicatorView: UIActivityIndicatorView = {
         let aiv = UIActivityIndicatorView(style: .whiteLarge)
         aiv.color = .darkGray
@@ -238,7 +238,7 @@ class TodayVC: BaseListController, UIGestureRecognizerDelegate {
         return true
     }
     
-    var appFullScreenOffset:CGFloat = 0
+   
     
     //TODO: -handle methods
     
@@ -290,7 +290,8 @@ class TodayVC: BaseListController, UIGestureRecognizerDelegate {
             self.tabBarController?.tabBar.transform = .identity
             
             guard let cel = self.appFullVC.tableView.cellForRow(at: [0,0]) as? AppFullScreenHeaderCell else {return}
-            cel.closeButton.alpha = 0 // to hide when minmize using draging cell
+//            cel.closeButton.alpha = 0 // to hide when minmize using draging cell
+              self.appFullVC.closeButton.alpha = 0 // to hide when minmize using draging cell
             cel.mainImageCell.topConstraint.constant = 24
             cel.layoutIfNeeded()
         }) { (_) in
