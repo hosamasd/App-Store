@@ -19,13 +19,13 @@ class SearchCell: BaseCell {
             
           
             self.appImage.sd_setImage(with: URL(string: app.artworkUrl100))
-              self.appScreenShot1Image.sd_setImage(with: URL(string: app.screenshotUrls[0]))
+            self.appScreenShot1Image.sd_setImage(with: URL(string: app.screenshotUrls![0]))
           
-            if app.screenshotUrls.count > 1 {
-                 self.appScreenShot2Image.sd_setImage(with: URL(string: app.screenshotUrls[1]))
+            if app.screenshotUrls!.count > 1 {
+                 self.appScreenShot2Image.sd_setImage(with: URL(string: app.screenshotUrls![1]))
             }
-            if app.screenshotUrls.count > 2 {
-                self.appScreenShot3Image.sd_setImage(with: URL(string: app.screenshotUrls[2]))
+            if app.screenshotUrls!.count > 2 {
+                self.appScreenShot3Image.sd_setImage(with: URL(string: app.screenshotUrls![2]))
             }
             
             

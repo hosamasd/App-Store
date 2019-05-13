@@ -22,7 +22,7 @@ class AppFullScreenVC: UIViewController, UITableViewDataSource, UITableViewDeleg
     }()
     
     let tableView = UITableView(frame: .zero, style: .plain)
-    
+     let floatingControlmainView = UIView()
     
     
     override func viewDidLoad() {
@@ -35,7 +35,7 @@ class AppFullScreenVC: UIViewController, UITableViewDataSource, UITableViewDeleg
         
         setupFloatinControls()
     }
-    let mainView = UIView()
+   
     
     func scrollViewDidScroll(_ scrollView: UIScrollView) {
         if scrollView.contentOffset.y < 0 {
@@ -49,29 +49,29 @@ class AppFullScreenVC: UIViewController, UITableViewDataSource, UITableViewDeleg
         
         UIView.animate(withDuration: 0.7, delay: 0, usingSpringWithDamping: 0.7, initialSpringVelocity: 0.7, options: .curveEaseInOut, animations: {
             
-            self.mainView.transform = transform
+            self.floatingControlmainView.transform = transform
         })
         
     }
     
     @objc func handleTapped(){
         UIView.animate(withDuration: 0.7, delay: 0, usingSpringWithDamping: 0.7, initialSpringVelocity: 0.7, options: .curveEaseInOut, animations: {
-            self.mainView.transform = .init(translationX: 0, y: -90)
+            self.floatingControlmainView.transform = .init(translationX: 0, y: -90)
         })
     }
     
     func setupFloatinControls()  {
-        mainView.layer.cornerRadius = 16
-        mainView.clipsToBounds = true
+        floatingControlmainView.layer.cornerRadius = 16
+        floatingControlmainView.clipsToBounds = true
         
         
-        view.addSubview(mainView)
+        view.addSubview(floatingControlmainView)
         
         
-        mainView.anchor(top: nil, leading: view.leadingAnchor, bottom: view.bottomAnchor, trailing: view.trailingAnchor,padding: .init(top: 0, left: 16, bottom: -90, right: 16),size: .init(width: 0, height: 90))
+        floatingControlmainView.anchor(top: nil, leading: view.leadingAnchor, bottom: view.bottomAnchor, trailing: view.trailingAnchor,padding: .init(top: 0, left: 16, bottom: -90, right: 16),size: .init(width: 0, height: 90))
         
         let blurVisulEffectView = UIVisualEffectView(effect: UIBlurEffect(style: UIBlurEffect.Style.regular))
-        mainView.addSubview(blurVisulEffectView)
+        floatingControlmainView.addSubview(blurVisulEffectView)
         blurVisulEffectView.fillSuperview()
         
         view.addGestureRecognizer(UITapGestureRecognizer(target: self, action: #selector(handleTapped)))
@@ -99,7 +99,7 @@ class AppFullScreenVC: UIViewController, UITableViewDataSource, UITableViewDeleg
             getButton
             ], customSpacing: 16)
         
-        mainView.addSubview(stackView)
+        floatingControlmainView.addSubview(stackView)
         stackView.fillSuperview(padding: .init(top: 0, left: 16, bottom: 0, right: 16))
         stackView.alignment = .center
     }

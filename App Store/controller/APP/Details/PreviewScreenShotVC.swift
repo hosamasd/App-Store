@@ -22,12 +22,12 @@ class PreviewScreenShotVC: SnappingHorizentalVC {
      //MARK:-UICollectionView methods
     
     override func collectionView(_ collectionView: UICollectionView, numberOfItemsInSection section: Int) -> Int {
-        return appsArray?.screenshotUrls.count ?? 0
+        return appsArray?.screenshotUrls?.count ?? 0
     }
     
     override func collectionView(_ collectionView: UICollectionView, cellForItemAt indexPath: IndexPath) -> UICollectionViewCell {
         let cell = collectionView.dequeueReusableCell(withReuseIdentifier: cellID, for: indexPath) as! PreviewsScreenSHotCell
-        let screen = appsArray?.screenshotUrls[indexPath.item]
+        let screen = appsArray?.screenshotUrls?[indexPath.item]
         
         cell.appScreenShotImage.sd_setImage(with: URL(string: screen ?? ""))
         return cell

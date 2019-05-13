@@ -18,7 +18,7 @@ class MainTabBarVC: UITabBarController {
      //MARK: -user methods
     
     fileprivate func setupViewControllers() {
-        
+         let music = templateNavControllerVC(title: "Music", selectedImage: #imageLiteral(resourceName: "music"), rootViewController: MusicVC())
         let today = templateNavControllerVC(title: "Today", selectedImage: #imageLiteral(resourceName: "today_icon"), rootViewController: TodayVC())
         let search = templateNavControllerVC(title: "Search", selectedImage: #imageLiteral(resourceName: "search"), rootViewController: AppSearchVC() )
         let apps = templateNavControllerVC(title: "Apps", selectedImage: #imageLiteral(resourceName: "apps"), rootViewController: AppsListVC())
@@ -27,6 +27,7 @@ class MainTabBarVC: UITabBarController {
         tabBar.tintColor = .black
         
         viewControllers = [
+            music,
             today,
             apps,
             search,
