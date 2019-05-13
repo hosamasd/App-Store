@@ -23,31 +23,96 @@ class AppFullScreenVC: UIViewController, UITableViewDataSource, UITableViewDeleg
     
     let tableView = UITableView(frame: .zero, style: .plain)
     
+    
+    
     override func viewDidLoad() {
         super.viewDidLoad()
         
         view.clipsToBounds = true
         
         setupTableViews()
-       view.addSubview(closeButton)
-
-        closeButton.anchor(top: view.topAnchor, leading: nil, bottom: nil, trailing: view.trailingAnchor,padding: .init(top: 44, left: 0, bottom: 0, right: 8),size: .init(width: 80, height: 40))
-
+        setupCloseButton()
+        
+        setupFloatinControls()
     }
+    let mainView = UIView()
     
-     func scrollViewDidScroll(_ scrollView: UIScrollView) {
+    func scrollViewDidScroll(_ scrollView: UIScrollView) {
         if scrollView.contentOffset.y < 0 {
             scrollView.isScrollEnabled = false
             scrollView.isScrollEnabled = true
         }
+        print(scrollView.contentOffset.y)
+        
+        let translationY = -90 - UIApplication.shared.statusBarFrame.height
+        let transform = scrollView.contentOffset.y > 100 ? CGAffineTransform(translationX: 0, y: translationY) : .identity
+        
+        UIView.animate(withDuration: 0.7, delay: 0, usingSpringWithDamping: 0.7, initialSpringVelocity: 0.7, options: .curveEaseInOut, animations: {
+            
+            self.mainView.transform = transform
+        })
+        
     }
+    
+    @objc func handleTapped(){
+        UIView.animate(withDuration: 0.7, delay: 0, usingSpringWithDamping: 0.7, initialSpringVelocity: 0.7, options: .curveEaseInOut, animations: {
+            self.mainView.transform = .init(translationX: 0, y: -90)
+        })
+    }
+    
+    func setupFloatinControls()  {
+        mainView.layer.cornerRadius = 16
+        mainView.clipsToBounds = true
+        
+        
+        view.addSubview(mainView)
+        
+        
+        mainView.anchor(top: nil, leading: view.leadingAnchor, bottom: view.bottomAnchor, trailing: view.trailingAnchor,padding: .init(top: 0, left: 16, bottom: -90, right: 16),size: .init(width: 0, height: 90))
+        
+        let blurVisulEffectView = UIVisualEffectView(effect: UIBlurEffect(style: UIBlurEffect.Style.regular))
+        mainView.addSubview(blurVisulEffectView)
+        blurVisulEffectView.fillSuperview()
+        
+        view.addGestureRecognizer(UITapGestureRecognizer(target: self, action: #selector(handleTapped)))
+        
+        // add our subviews
+        let imageView = UIImageView(cornerRdius: 16)
+        imageView.image = item?.image
+        imageView.constrainHeight(constant: 68)
+        imageView.constrainWidth(constant: 68)
+        
+        let getButton = UIButton(title: "GET")
+        getButton.setTitleColor(.white, for: .normal)
+        getButton.titleLabel?.font = UIFont.boldSystemFont(ofSize: 16)
+        getButton.backgroundColor = .darkGray
+        getButton.layer.cornerRadius = 16
+        getButton.constrainWidth(constant: 80)
+        getButton.constrainHeight(constant: 32)
+        
+        let stackView = UIStackView(arrangedSubviews: [
+            imageView,
+            VerticalStackView(arrangedSubviews: [
+                UILabel(string: "Life Hack", font: .boldSystemFont(ofSize: 18)),
+                UILabel(string: "Utilizing your Time", font: .systemFont(ofSize: 16))
+                ], spacing: 4),
+            getButton
+            ], customSpacing: 16)
+        
+        mainView.addSubview(stackView)
+        stackView.fillSuperview(padding: .init(top: 0, left: 16, bottom: 0, right: 16))
+        stackView.alignment = .center
+    }
+    
+    
+    
     //MARK: -UITableView methods
     
-     func tableView(_ tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
+    func tableView(_ tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
         return 2
     }
     
-     func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {
+    func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {
         
         if indexPath.row == 0 {
             let  cellHeader =  AppFullScreenHeaderCell()
@@ -61,11 +126,11 @@ class AppFullScreenVC: UIViewController, UITableViewDataSource, UITableViewDeleg
         return cell
     }
     
-     func tableView(_ tableView: UITableView, heightForRowAt indexPath: IndexPath) -> CGFloat {
+    func tableView(_ tableView: UITableView, heightForRowAt indexPath: IndexPath) -> CGFloat {
         if indexPath.row == 0 {
             return TodayVC.cellSize
         }
-//        return super.tableView(tableView, heightForRowAt: indexPath)
+        //        return super.tableView(tableView, heightForRowAt: indexPath)
         return UITableView.automaticDimension
     }
     
@@ -87,6 +152,11 @@ class AppFullScreenVC: UIViewController, UITableViewDataSource, UITableViewDeleg
         
         let height = UIApplication.shared.statusBarFrame.height
         tableView.contentInset = .init(top: 0, left: 0, bottom: height, right: 0)
+    }
+    
+    fileprivate func setupCloseButton() {
+        view.addSubview(closeButton)
+        closeButton.anchor(top: view.topAnchor, leading: nil, bottom: nil, trailing: view.trailingAnchor,padding: .init(top: 44, left: 0, bottom: 0, right: 8),size: .init(width: 80, height: 40))
     }
     
     //TODO: -handle methods
