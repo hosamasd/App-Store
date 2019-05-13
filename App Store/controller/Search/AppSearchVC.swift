@@ -74,7 +74,7 @@ class AppSearchVC: BaseListController {
  fileprivate   func fetchAppsFromItubes()  {
         Services.shared.fetchApps(searchText: "Instagram") { (res, err) in
             if err != nil {
-                print("error to fetch apps ",err?.localizedDescription)
+                print("error to fetch apps ",err)
                 return
             }
             
@@ -110,7 +110,7 @@ extension AppSearchVC :UISearchBarDelegate {
             
             Services.shared.fetchApps(searchText: searchText) { (res, err) in
                 if err != nil {
-                    print("error to fetch apps ",err?.localizedDescription)
+                    print("error to fetch apps ",err)
                     return
                 }
                 
