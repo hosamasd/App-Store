@@ -8,7 +8,7 @@
 
 import UIKit
 
-class TodayVC: BaseListController {
+class TodayVC: BaseListController, UIGestureRecognizerDelegate {
     
     static let cellSize: CGFloat = 500
     
@@ -24,9 +24,14 @@ class TodayVC: BaseListController {
     var anchorConstraints:AnchoredConstraints?
     
     var startingFrame: CGRect?
-    
+    let blurVisualEffectView = UIVisualEffectView(effect: UIBlurEffect(style: UIBlurEffect.Style.regular))
+
     override func viewDidLoad() {
         super.viewDidLoad()
+        view.addSubview(blurVisualEffectView)
+        blurVisualEffectView.fillSuperview()
+        blurVisualEffectView.alpha = 0
+        
         setupActivityIndicator()
         
         setupCollectionViews()
@@ -132,11 +137,18 @@ class TodayVC: BaseListController {
         
         appFullVC.handleCloseClosure = {
             
-            self.handleRemoveView()
+            self.handleRemoveAppFullVC()
         }
         appFullVC.view.layer.cornerRadius = 16
         self.appFullVC = appFullVC
+        
+        let gesture = UIPanGestureRecognizer(target: self, action: #selector(handleDrag))
+        gesture.delegate = self
+        appFullVC.view.addGestureRecognizer(gesture)
+        
     }
+    
+   
     
     func setupAppFullScreenPosition(_ indexPath:IndexPath)  {
         let fullScreenApp = appFullVC.view!
@@ -163,6 +175,8 @@ class TodayVC: BaseListController {
     func beginAnimationAppFullScreen()  {
         
         UIView.animate(withDuration: 0.7, delay: 0, usingSpringWithDamping: 0.7, initialSpringVelocity: 0.7, options: .curveEaseInOut, animations: {
+            
+            self.blurVisualEffectView.alpha = 1
             
             self.anchorConstraints?.top?.constant = 0
             self.anchorConstraints?.leading?.constant = 0
@@ -219,10 +233,32 @@ class TodayVC: BaseListController {
         }
     }
     
+    //allow multi gesture
+    func gestureRecognizer(_ gestureRecognizer: UIGestureRecognizer, shouldRecognizeSimultaneouslyWith otherGestureRecognizer: UIGestureRecognizer) -> Bool {
+        return true
+    }
+    
+    
     //TODO: -handle methods
     
-    @objc  func handleRemoveView()  {
+    @objc func handleDrag(gesture: UIPanGestureRecognizer){
+        let translatY = gesture.translation(in: appFullVC.view).y
+        
+       
+        if gesture.state == .changed {
+            let scale = 1 - translatY / 1000  // increase 1000 better performance
+            let transform:CGAffineTransform = .init(scaleX: scale, y: scale)
+            self.appFullVC.view.transform = transform
+        }else if gesture.state == .ended {
+            handleRemoveAppFullVC()
+        }
+    }
+    
+    @objc  func handleRemoveAppFullVC()  {
         UIView.animate(withDuration: 0.7, delay: 0, usingSpringWithDamping: 0.7, initialSpringVelocity: 0.7, options: .curveEaseInOut, animations: {
+            
+             self.blurVisualEffectView.alpha = 0
+            self.appFullVC.view.transform = .identity
             
             self.appFullVC.tableView.contentOffset = .zero
             
