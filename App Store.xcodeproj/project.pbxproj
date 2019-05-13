@@ -187,6 +187,24 @@
 			path = AppRating;
 			sourceTree = "<group>";
 		};
+		4E8F4D6E2289982C00DC1D3A /* Helper VCS */ = {
+			isa = PBXGroup;
+			children = (
+				4ECAF7B02282E79A0035E3FC /* BaseListController.swift */,
+				4E64E2E922840E26003C7A85 /* SnappingHorizentalVC.swift */,
+				4E9803982282B127002DFF90 /* MainTabBarVC.swift */,
+			);
+			path = "Helper VCS";
+			sourceTree = "<group>";
+		};
+		4E8F4D6F2289989800DC1D3A /* Search Cell */ = {
+			isa = PBXGroup;
+			children = (
+				4E98039C2282B6F4002DFF90 /* SearchCell.swift */,
+			);
+			path = "Search Cell";
+			sourceTree = "<group>";
+		};
 		4E9803772282B068002DFF90 = {
 			isa = PBXGroup;
 			children = (
@@ -225,13 +243,11 @@
 		4E9803952282B074002DFF90 /* controller */ = {
 			isa = PBXGroup;
 			children = (
-				4E819F0B22897EAF00EEFBA6 /* Music */,
+				4E8F4D6E2289982C00DC1D3A /* Helper VCS */,
 				4E99CCAD2286A445006702DD /* Today */,
-				4ECAF7B02282E79A0035E3FC /* BaseListController.swift */,
-				4E64E2E922840E26003C7A85 /* SnappingHorizentalVC.swift */,
-				4E9803982282B127002DFF90 /* MainTabBarVC.swift */,
 				4ECAF7B92282EA3E0035E3FC /* APP */,
 				4E9ED5D42286C39F00DAF968 /* Search */,
+				4E819F0B22897EAF00EEFBA6 /* Music */,
 			);
 			path = controller;
 			sourceTree = "<group>";
@@ -253,7 +269,7 @@
 			children = (
 				4ECAF7B72282E8C10035E3FC /* BaseCell.swift */,
 				4ECAF7B42282E80F0035E3FC /* App */,
-				4E98039C2282B6F4002DFF90 /* SearchCell.swift */,
+				4E8F4D6F2289989800DC1D3A /* Search Cell */,
 				4E819F0E22897F3400EEFBA6 /* Music  */,
 			);
 			path = view;
@@ -328,10 +344,10 @@
 		4ECAF7B92282EA3E0035E3FC /* APP */ = {
 			isa = PBXGroup;
 			children = (
-				4E765F2A228421B20025BED6 /* Details */,
 				4ECAF7B22282E7D80035E3FC /* AppsListVC.swift */,
 				4ECAF7BC2282EC8B0035E3FC /* AppListHorizentalVC.swift */,
 				4E887A872282FDA1008B4E55 /* AppHeaderHorizentalVC.swift */,
+				4E765F2A228421B20025BED6 /* Details */,
 			);
 			path = APP;
 			sourceTree = "<group>";

@@ -27,10 +27,10 @@ class MainTabBarVC: UITabBarController {
         tabBar.tintColor = .black
         
         viewControllers = [
-            music,
             today,
             apps,
             search,
+             music
         ]
         
         guard let items = tabBar.items else { return }

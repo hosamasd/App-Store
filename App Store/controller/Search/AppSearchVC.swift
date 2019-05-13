@@ -98,8 +98,13 @@ class AppSearchVC: BaseListController {
 extension AppSearchVC :UISearchBarDelegate {
     
     func searchBar(_ searchBar: UISearchBar, textDidChange searchText: String) {
-        print(searchText)
-//        self.appResultsArray.removeAll()
+       
+        if searchText.count == 0 {
+            self.appResultsArray.removeAll()
+            DispatchQueue.main.async {
+                self.collectionView.reloadData()
+            }
+        }
         timer?.invalidate()
         timer = Timer.scheduledTimer(withTimeInterval: 0.5, repeats: false, block: { (_) in
             
@@ -116,4 +121,6 @@ extension AppSearchVC :UISearchBarDelegate {
             }
         })
    }
+    
+    
 }
