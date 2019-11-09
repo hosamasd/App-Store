@@ -6,7 +6,7 @@ demo video.
 
 ![Alt Text](https://j.gifs.com/vlJJOr.gif)
 
-![load1](https://user-images.githubusercontent.com/34996617/57621796-a8d65200-758c-11e9-961d-7fba682fc13d.png)
+![1](https://user-images.githubusercontent.com/34996617/57621796-a8d65200-758c-11e9-961d-7fba682fc13d.png)
 ![2](https://user-images.githubusercontent.com/34996617/57621798-aaa01580-758c-11e9-8754-ced581d71b42.png)
 ![3](https://user-images.githubusercontent.com/34996617/57621802-abd14280-758c-11e9-97c3-f054a84401b5.png)
 ![4](https://user-images.githubusercontent.com/34996617/57621809-ad9b0600-758c-11e9-9170-a39525a01260.png)
