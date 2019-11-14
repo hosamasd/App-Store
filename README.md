@@ -2,7 +2,7 @@
 Simple app store design that we usin itunes api to fetch data and manipulate with it.
 Enjoy!
 
-#short demo video.
+# short demo video.
 
 
 https://j.gifs.com/vlJJOr.gif
